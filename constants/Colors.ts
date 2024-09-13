@@ -22,6 +22,7 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    blue: '#4287f5'
   },
   screen: {
     contacto: {

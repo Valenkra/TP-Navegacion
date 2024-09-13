@@ -1,6 +1,8 @@
 import { Text, type TextProps, StyleSheet } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 interface MyTextProps extends TextProps {
   lightColor?: string;
@@ -31,16 +33,19 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
+    marginVertical: scale(1)
   },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
     fontWeight: '600',
+    marginVertical: scale(1)
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     lineHeight: 32,
+    marginVertical: scale(1.5)
   },
   subtitle: {
     fontSize: 20,
