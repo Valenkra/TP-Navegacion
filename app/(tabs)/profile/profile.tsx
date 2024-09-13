@@ -53,6 +53,16 @@ export default function MyProfile() {
         />
       <Button
         label='aloha'
+        size= 'small'
+        type='primary'
+       />
+       <Button
+       label='aloha'
+       size= 'regular'
+       type='primary'
+      />
+      <Button
+        label='aloha'
         size= 'large'
         type='primary'
        />

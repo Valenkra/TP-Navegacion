@@ -14,6 +14,8 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
+    secondary: '#76a7f5',
+    primary: '#f09d5d'
   },
   dark: {
     text: '#ECEDEE',
@@ -22,7 +24,10 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
-    blue: '#4287f5'
+    secondary: '#4287f5',
+    secondaryAccent: '#5880bf',
+    primary: '#eb8436',
+    primaryAccent: '#ba7832'
   },
   screen: {
     contacto: {

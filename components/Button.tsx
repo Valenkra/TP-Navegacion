@@ -5,6 +5,8 @@ import { ViewStyle } from "react-native-size-matters";
 import { Colors } from "@/constants/Colors";
 import { scale, verticalScale } from "react-native-size-matters";
 import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
+import { Appearance } from "react-native";
+import { Dimensions } from "react-native";
 
 interface ButtonProps {
   label: string;
@@ -16,12 +18,12 @@ interface ButtonProps {
   labelStyle?: TextStyle;
 }
 
-export default function Button({ label, size, type, onPress, disabled, style, labelStyle}: ButtonProps) {
+export default function Button({ label, size, type, onPress, disabled = false, style, labelStyle}: ButtonProps) {
 
   return (
     <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
         <Pressable style={getButtonStyle(size, type)}>
-            <Text style={{color: Colors.dark.background}}>{label}</Text>
+            <Text style={getLabelStyle(type, size)}>{label}</Text>
         </Pressable>
     </View>
   );
@@ -31,27 +33,63 @@ function getButtonStyle( size: ButtonProps['size'], type: ButtonProps['type']) {
     return [
         (size === "small") ? styles.small : (size === "large") ? styles.large : styles.regular,
         (type === "primary") ? styles.primary : styles.secondary,
-        styles.btn
+        styles.btn,
+
     ];
+}
+
+function getLabelStyle(type: ButtonProps['type'], size: ButtonProps['size']){
+  return [
+    (size === "regular") ? styles.labelRegularSize : styles.labelSmallerSize,
+    (size === "large") ? styles.labelBold : styles.labelSemiBold,
+    styles.label
+  ]
 }
 
 const styles = StyleSheet.create({
   btn: {
-    borderRadius: scale(10),
+    borderRadius: scale(15),
+    shadowOpacity: 0.3,
+    elevation: 3,
+    shadowRadius: 10 ,
+    shadowOffset : { width: 1, height: 7},
   },
   small: {
-    padding: scale(20)
+    paddingHorizontal: scale(20),
+    paddingVertical: scale(10)
   },
   regular: {
-    padding: scale(25)
+    paddingHorizontal: scale(35),
+    paddingVertical: scale(15)
   },
   large: {
-    padding: scale(30)
+    display: 'flex',
+    alignItems: 'center',
+    width: Dimensions.get('window').width - scale(65),
+    paddingVertical: scale(15)
+  },
+  label: {
+    color: (Appearance.getColorScheme() === "dark") ? Colors.dark.text : Colors.light.text,
+  },
+  labelSemiBold: {
+    fontWeight: '600',
+  },
+  labelRegularSize: {
+    fontSize: scale(14)
+  },
+  labelSmallerSize: {
+    fontSize: scale(12)
+  },
+  labelBold: {
+    fontWeight: 'bold',
+    fontSize: scale(16),
   },
   primary: {
-    backgroundColor: Colors.dark.blue,
+    backgroundColor:  (Appearance.getColorScheme() === "dark") ?  Colors.dark.primary : Colors.light.primary,
+    shadowColor: Colors.dark.primaryAccent,
   },
   secondary: {
-
+    backgroundColor:  (Appearance.getColorScheme() === "dark") ?  Colors.dark.secondary : Colors.light.secondary,
+    shadowColor: Colors.dark.primaryAccent,
   }
 });
