@@ -25,14 +25,6 @@ export default function MyProfile() {
     headerBackgroundColor={{ light: Colors.screen.profile.light, dark: Colors.screen.profile.dark }}
     headerImage={<Ionicons size={310} name="settings-outline" style={[styles.headerImage, {color: (Appearance.getColorScheme() === "dark") ? Colors.screen.profile.darkIcon : Colors.screen.profile.lightIcon}]} />}>
       <View style={styles.textContainer}>
-      <Button
-      label="Back"
-      size='small'
-      type='primary'
-      onPress={() => {
-        navigation.goBack();
-      }}
-    />
         <MyText
           type='title'
           value='Buenos días!'
@@ -52,18 +44,8 @@ export default function MyProfile() {
           placeholder='aloha'
         />
       <Button
-        label='aloha'
+        label='Comenzar configuración'
         size= 'small'
-        type='primary'
-       />
-       <Button
-       label='aloha'
-       size= 'regular'
-       type='primary'
-      />
-      <Button
-        label='aloha'
-        size= 'large'
         type='primary'
        />
   </ParallaxScrollView>

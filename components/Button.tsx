@@ -22,7 +22,7 @@ export default function Button({ label, size, type, onPress, disabled = false, s
 
   return (
     <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
-        <Pressable style={getButtonStyle(size, type)}>
+        <Pressable onPress={onPress} style={getButtonStyle(size, type)}>
             <Text style={getLabelStyle(type, size)}>{label}</Text>
         </Pressable>
     </View>
