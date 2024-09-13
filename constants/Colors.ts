@@ -17,10 +17,21 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
-    background: '#151718',
+    background: '#151718', //#353636
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
+  screen: {
+    contacto: {
+      dark: '#1b1740'
+    },
+    profile: {
+      dark: '#172f40',
+      light: '#50a8e6',
+      lightIcon: '#0c4b78',
+      darkIcon: '#1e679c'
+    }
+  }
 };
