@@ -9,6 +9,9 @@ import NavigationContainer from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackScreen from '@/components/navigation/HomeStack';
 import PerfilStackScreen from '@/components/navigation/PerfilStack';
+import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import ContactosStackScreen from '@/components/navigation/ContactosStack';
+import CreditosStackScreen from '@/components/navigation/CreditosStack';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,18 +35,53 @@ export default function RootLayout() {
   const Tab = createBottomTabNavigator();
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
             tabBarLabel: () => null, // Oculta el texto de la pestaña
             headerShown: false, // Asegúrate de que no se muestre el encabezado en el TabNavigator
           })}
         >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Mi Perfil" component={PerfilStackScreen} />
+          <Tab.Screen 
+            name="(tabs)/index" 
+            component={HomeStackScreen}
+            options={{
+              title: 'Home',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+              ),
+            }} 
+            />
+          <Tab.Screen 
+            name="(tabs)/profile/profile"  
+            component={PerfilStackScreen} 
+            options={{
+              title: 'Mi perfil',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={color} />
+              ),
+            }}
+            />
+          <Tab.Screen 
+            name="(tabs)/contacto"  
+            component={ContactosStackScreen} 
+            options={{
+              title: 'Contactos',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'call' : 'call-outline'} color={color} />
+              ),
+            }}
+            />
+          <Tab.Screen 
+            name="(tabs)/creditos"  
+            component={CreditosStackScreen} 
+            options={{
+              title: 'Sobre Nosotros',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'book' : 'book-outline'} color={color} />
+              ),
+            }}
+            />
         </Tab.Navigator>
-        </NavigationContainer>
     </ThemeProvider>
   );
 }
