@@ -8,11 +8,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { MyText } from '@/components/MyText';
 import { Colors } from '@/constants/Colors';
 import { Dimensions } from 'react-native';
 
-export default function TabThreeScreen() {
+export default function Contacto() {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <View>

@@ -17,7 +17,7 @@ import * as React from 'react';
 import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function MyProfile() {
+export default function MyProfileConfig() {
   const navigation = useNavigation();
 
   return (
