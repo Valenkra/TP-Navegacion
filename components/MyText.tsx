@@ -31,8 +31,8 @@ export function MyText({ style, lightColor, darkColor, type, value }: MyTextProp
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 20,
+    lineHeight: 25,
     marginVertical: scale(1)
   },
   defaultSemiBold: {

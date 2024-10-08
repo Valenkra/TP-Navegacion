@@ -4,55 +4,39 @@ import { Colors } from "@/constants/Colors";
 import { scale, verticalScale } from "react-native-size-matters";
 import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
 import { MyText } from "./MyText";
+import { Dimensions } from "react-native";
 
 interface ContactoProps {
   name: string;
-  id: string;
+  id?: string;
   onPress?: (id: string) => void;
 }
 
-export default function MiContacto({ name, id, onPress }: ContactoProps) {
+export default function MiContacto({ name }: ContactoProps) {
   return (
-    <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
+    <View style={[{flexDirection: 'column', alignItems: 'flex-start'}, styles.container]}>
         <MyText
         type="default"
         value={name}
         />
+        <View style={styles.div}></View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  Contacto: {
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    width: scale(263.85),
-    backgroundColor: Colors.dark.background,
-    color: Colors.light.background,
-    paddingLeft: scale(14.36)
+  container:{
+    width: '100%',
+    flexGrow: 1,
+    paddingRight: scale(50),
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: scale(10)
   },
-  active: {
-    borderWidth: 1,
-    borderColor: Colors.dark.background,
-  },
-  normal: {
-    height: scale(37.7)
-  },
-  large: {
-    height: scale(74.49)
-  },
-  label: {
-    fontFamily: 'Regular',
-    fontSize: scale(12.6),
-    color: Colors.light.background,
-    marginBottom: scale(3.6)
-  },
-  icon: { 
-    marginLeft: scale(-28.75), 
-  },
-  ContactoContainer: {
-    padding: 10,
-    backgroundColor: 'white',
-  },
+  div: {
+    width: '100%',
+    height: scale(1),
+    backgroundColor: '#919191',
+    marginTop: scale(5)
+  }
 });

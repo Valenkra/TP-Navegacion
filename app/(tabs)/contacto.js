@@ -10,10 +10,12 @@ import * as Contacts from 'expo-contacts';
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import MiContacto from '@/components/MiContacto';
+import { FlatList } from 'react-native';
+import { scale } from 'react-native-size-matters';
+import { Text } from 'react-native';
 
 const Contacto = ({ navigation }) => {
   const [contactos, setContactos] = useState();
-
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -29,38 +31,26 @@ const Contacto = ({ navigation }) => {
     })();
   }, []);
 
-  const mostrarContactos = () =>{ contactos.map(async (c) => {
-    return (<MiContacto
-      name={c.name}
-      id={c.id}
-      key={c.id}
-    />
-    )
-  })}
+  const filtrarLista = () => {
+    return contactos.filter(c => c["name"] !== "");
+  }
 
-/**
- * 
-        {
-          contactos.map(c => {
-            <MiContacto
-              name={c.name}
-              id={c.id}
-              key={c.id}
-            />
-          })
-        }
- */
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.titleContainer}>
-          <MyText
-            type='title'
-            value='Contactos'
+      <View style={styles.titleContainer}>
+        <MyText
+          type='title'
+          value='Contactos'
+          style={styles.contacto}
+        />
+      </View>
+      <FlatList
+            directionalLockEnabled={true}
+            horizontal={false}
+            data={(contactos !== undefined) ? filtrarLista() : ""}
+            renderItem={({item}) => <MiContacto name={item.name}/>}
+            keyExtractor={item => item.id}
           />
-          {mostrarContactos()}
-        </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -81,8 +71,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.background,
     height: Dimensions.get('window').height,
     flex: 1,
-    alignItems: 'center',
-  }
+    alignItems: 'flex-start',
+    paddingHorizontal: scale(30),
+    paddingTop: scale(20),
+  },
+  contacto: {
+    fontSize: scale(40),
+    lineHeight: scale(40)
+  },
+  item: {
+  },
 });
 
 export default Contacto;
