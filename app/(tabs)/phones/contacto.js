@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image, Platform, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +12,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import MiContacto from '@/components/MiContacto';
 import { FlatList } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import NavigationContainer from '@react-navigation/native';
 import { Text } from 'react-native';
+export const MARGIN = 20;
 
 const Contacto = ({ navigation }) => {
   const [contactos, setContactos] = useState();
@@ -23,7 +25,6 @@ const Contacto = ({ navigation }) => {
         const { data } = await Contacts.getContactsAsync({
           fields: [Contacts.Fields.FirstName]
         });
-
         if (data.length > 0) {
           setContactos([...data]);
         }
@@ -31,27 +32,28 @@ const Contacto = ({ navigation }) => {
     })();
   }, []);
 
+
   const filtrarLista = () => {
-    return contactos.filter(c => c["name"] !== "");
+    return contactos.filter(c => c["name"] != "");
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.titleContainer}>
-        <MyText
-          type='title'
-          value='Contactos'
-          style={styles.contacto}
-        />
-      </View>
-      <FlatList
-            directionalLockEnabled={true}
-            horizontal={false}
-            data={(contactos !== undefined) ? filtrarLista() : ""}
-            renderItem={({item}) => <MiContacto name={item.name}/>}
-            keyExtractor={item => item.id}
+      <SafeAreaView style={styles.container}>
+        <View style={styles.titleContainer}>
+          <MyText
+            type='title'
+            value='Contactos'
+            style={styles.contacto}
           />
-    </SafeAreaView>
+        </View>
+        <FlatList
+              directionalLockEnabled={true}
+              horizontal={false}
+              data={(contactos !== undefined) ? filtrarLista() : ""}
+              renderItem={({item}) => <Pressable onPress={()=>{navigation.navigate("ContactInfo", {contact: item})}}><MiContacto name={item.name}/></Pressable>}
+              keyExtractor={item => item.id}
+            />
+      </SafeAreaView>
   );
 }
 
@@ -65,22 +67,21 @@ const styles = StyleSheet.create({
   titleContainer: {
     display:'flex',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginBottom: scale(20)
   },
   container: {
     backgroundColor: Colors.dark.background,
     height: Dimensions.get('window').height,
     flex: 1,
     alignItems: 'flex-start',
-    paddingHorizontal: scale(30),
+    paddingHorizontal: scale(MARGIN),
     paddingTop: scale(20),
   },
-  contacto: {
-    fontSize: scale(40),
+  contacto:{
+    fontSize: scale(35),
     lineHeight: scale(40)
-  },
-  item: {
-  },
+  }
 });
 
 export default Contacto;

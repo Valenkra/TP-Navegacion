@@ -62,7 +62,7 @@ export default function RootLayout() {
             }}
             />
           <Tab.Screen 
-            name="(tabs)/contacto"  
+            name="(tabs)/phones/contacto"  
             component={ContactosStackScreen} 
             options={{
               title: 'Contactos',

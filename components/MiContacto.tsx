@@ -5,19 +5,28 @@ import { scale, verticalScale } from "react-native-size-matters";
 import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
 import { MyText } from "./MyText";
 import { Dimensions } from "react-native";
+import { NavigationAction } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 
 interface ContactoProps {
   name: string;
+  lastName?: string;
   id?: string;
+  nav?: object;
   onPress?: (id: string) => void;
 }
 
-export default function MiContacto({ name }: ContactoProps) {
+const MARGIN = 30;
+export default function MiContacto({ name, id, lastName, onPress, nav }: ContactoProps) {
+
   return (
     <View style={[{flexDirection: 'column', alignItems: 'flex-start'}, styles.container]}>
         <MyText
-        type="default"
+        type="subtitle"
         value={name}
+        numberOfLines={1}
+        style={{width: Dimensions.get('window').width - scale(MARGIN)* 2 - scale(10),
+                fontSize: scale(18)}}
         />
         <View style={styles.div}></View>
     </View>
@@ -26,17 +35,16 @@ export default function MiContacto({ name }: ContactoProps) {
 
 const styles = StyleSheet.create({
   container:{
-    width: '100%',
+    width: Dimensions.get('screen').width - scale(MARGIN)* 2,
     flexGrow: 1,
-    paddingRight: scale(50),
     display: 'flex',
     justifyContent: 'center',
-    marginTop: scale(10)
+    marginTop: scale(15),
   },
   div: {
     width: '100%',
     height: scale(1),
-    backgroundColor: '#919191',
-    marginTop: scale(5)
+    backgroundColor: '#2b2b2b',
+    marginTop: scale(15)
   }
 });
