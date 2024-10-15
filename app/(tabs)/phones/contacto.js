@@ -23,7 +23,9 @@ const Contacto = ({ navigation }) => {
       const { status } = await Contacts.requestPermissionsAsync();
       if (status === 'granted') {
         const { data } = await Contacts.getContactsAsync({
-          fields: [Contacts.Fields.FirstName]
+          fields: [Contacts.Fields.FirstName,
+            Contacts.Fields.PhoneNumbers,
+          Contacts.Fields.Image]
         });
         if (data.length > 0) {
           setContactos([...data]);
@@ -32,9 +34,15 @@ const Contacto = ({ navigation }) => {
     })();
   }, []);
 
+  console.log(contactos);
 
   const filtrarLista = () => {
     return contactos.filter(c => c["name"] != "");
+    /*
+      let newList = contactos.filter(c => c["name"] != "");
+      
+    */
+    //return newList.name.sort();
   }
 
   return (
@@ -50,7 +58,7 @@ const Contacto = ({ navigation }) => {
               directionalLockEnabled={true}
               horizontal={false}
               data={(contactos !== undefined) ? filtrarLista() : ""}
-              renderItem={({item}) => <Pressable onPress={()=>{navigation.navigate("ContactInfo", {contact: item})}}><MiContacto name={item.name}/></Pressable>}
+              renderItem={({item}) => (item.name != undefined && (item.phoneNumbers != undefined) && item.image != undefined) ? (<Pressable onPress={()=>{navigation.navigate("ContactInfo", {contact: item})}}><MiContacto name={item.name} number={ item.phoneNumbers[0].digits }/></Pressable>) : ""}
               keyExtractor={item => item.id}
             />
       </SafeAreaView>

@@ -10,24 +10,38 @@ import { useNavigation } from "expo-router";
 
 interface ContactoProps {
   name: string;
+  number: string;
   lastName?: string;
   id?: string;
   nav?: object;
   onPress?: (id: string) => void;
 }
 
-const MARGIN = 30;
-export default function MiContacto({ name, id, lastName, onPress, nav }: ContactoProps) {
+const MARGIN = 20;
+export default function MiContacto({ name, number, id, lastName, onPress, nav }: ContactoProps) {
 
   return (
     <View style={[{flexDirection: 'column', alignItems: 'flex-start'}, styles.container]}>
-        <MyText
-        type="subtitle"
-        value={name}
-        numberOfLines={1}
-        style={{width: Dimensions.get('window').width - scale(MARGIN)* 2 - scale(10),
-                fontSize: scale(18)}}
-        />
+        <View>
+          <View>
+            
+          </View>
+          <View>
+            <MyText
+            type="subtitle"
+            value={name}
+            numberOfLines={1}
+            style={{width: Dimensions.get('window').width - scale(MARGIN)* 2 - scale(10),
+                    fontSize: scale(20), marginBottom: 3}}
+            />
+            <MyText 
+                type="default"
+                value={number}
+                style={styles.number}
+            />
+          </View>
+        </View>
+
         <View style={styles.div}></View>
     </View>
   );
@@ -46,5 +60,9 @@ const styles = StyleSheet.create({
     height: scale(1),
     backgroundColor: '#2b2b2b',
     marginTop: scale(15)
+  },
+  number: {
+    fontSize: scale(15),
+    lineHeight: scale(20)
   }
 });
