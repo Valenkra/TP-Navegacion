@@ -27,7 +27,7 @@ export default function MiContacto({ name, myNum, id, lastName, firstName, onPre
           <View style={styles.profilePicture}>
             <MyText 
               type="default"
-              value={(firstName != "-1" && lastName != "-1") ? (`${firstName?[0]:""} ${lastName?[0]:""}`) : name[0]}
+              value={(firstName != "-1" && lastName != "-1") ? (`${firstName[0]} ${lastName[0]}`) : name[0]}
             />
           </View>
           <View>
