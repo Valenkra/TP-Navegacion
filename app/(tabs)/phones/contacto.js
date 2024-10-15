@@ -34,15 +34,9 @@ const Contacto = ({ navigation }) => {
     })();
   }, []);
 
-  console.log(contactos);
 
   const filtrarLista = () => {
-    return contactos.filter(c => c["name"] != "");
-    /*
-      let newList = contactos.filter(c => c["name"] != "");
-      
-    */
-    //return newList.name.sort();
+    return contactos.filter(c => c["name"] != undefined && c["phoneNumbers"] != undefined);
   }
 
   return (
@@ -58,7 +52,14 @@ const Contacto = ({ navigation }) => {
               directionalLockEnabled={true}
               horizontal={false}
               data={(contactos !== undefined) ? filtrarLista() : ""}
-              renderItem={({item}) => (item.name != undefined && (item.phoneNumbers != undefined) && item.image != undefined) ? (<Pressable onPress={()=>{navigation.navigate("ContactInfo", {contact: item})}}><MiContacto name={item.name} number={ item.phoneNumbers[0].digits }/></Pressable>) : ""}
+              renderItem={({item}) => (<Pressable onPress={()=>{navigation.navigate("ContactInfo", {contact: item})}}>
+                  <MiContacto 
+                    name={item.name} 
+                    myNum={ item.phoneNumbers[0].digits } 
+                    lastName={ (item.lastName != undefined) ? item.lastName : "-1"}
+                    firstName={ (item.firstName != undefined) ? item.firstName : "-1"}
+                    ></MiContacto>
+                </Pressable>)}
               keyExtractor={item => item.id}
             />
       </SafeAreaView>

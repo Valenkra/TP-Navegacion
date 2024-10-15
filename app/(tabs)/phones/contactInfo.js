@@ -9,7 +9,7 @@ import Back from "@/components/Back";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
-    console.log(contact.image)
+    
     return(
         <SafeAreaView style={styles.container}>
             <Back navigation={navigation}/>
