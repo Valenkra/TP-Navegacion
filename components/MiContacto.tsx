@@ -8,6 +8,7 @@ import { Dimensions } from "react-native";
 import { NavigationAction } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import numFormatter from "@/helpers/numFormatter";
+import { Ionicons } from "@expo/vector-icons";
 
 interface ContactoProps {
   name: string;
@@ -23,6 +24,7 @@ const MARGIN = 20;
 export default function MiContacto({ name, myNum, id, lastName, firstName, onPress, nav }: ContactoProps) {
   return (
     <View style={[{flexDirection: 'column', alignItems: 'flex-start'}, styles.container]}>
+      <View style={[{flexDirection: 'row'}]}>
         <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
           <View style={styles.profilePicture}>
             <MyText 
@@ -45,8 +47,8 @@ export default function MiContacto({ name, myNum, id, lastName, firstName, onPre
             />
           </View>
         </View>
-
-        <View style={styles.div}></View>
+      </View>
+      <View style={styles.div}></View>
     </View>
   );
 }
