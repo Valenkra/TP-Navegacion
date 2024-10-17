@@ -1,7 +1,7 @@
 import { StyleSheet, Image, Platform, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { MyText } from '@/components/MyText';
 import { Colors } from '@/constants/Colors';
 import { Dimensions } from 'react-native';
@@ -14,9 +14,13 @@ import { FlatList } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import NavigationContainer from '@react-navigation/native';
 import { Text } from 'react-native';
+import { useThemeColor } from '@/hooks/useThemeColor';
+
 export const MARGIN = 20;
 
 const Contacto = ({ navigation }) => {
+  const { colors } = useTheme();
+
   const [contactos, setContactos] = useState();
   const [myContact, setMyContact] = useState();
 
@@ -47,17 +51,22 @@ const Contacto = ({ navigation }) => {
       contactsFiltered[i].emergencyContact = false;
       
     }
+    console.log("aaa".localeCompare("bb"))
     contactsFiltered[3].emergencyContact = true;
-    return contactsFiltered;
+    return contactsFiltered.sort(function(a, b){
+      let n1 = new String(a["name"]);
+      let n2 = new String(b["name"]);
+      return n1.localeCompare(n2);
+    });
   }
 
   return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
         <View style={styles.titleContainer}>
           <MyText
             type='title'
             value='Contactos'
-            style={styles.contacto}
+            style={[styles.contacto, {color: useThemeColor({light: '', dark: ''}, 'text')}]}
           />
         </View>
         <FlatList
@@ -69,12 +78,12 @@ const Contacto = ({ navigation }) => {
                   { 
                     defineContact(item); 
                     console.log(myContact)
-                    
+                    /*
                     navigation.navigate("ContactInfo", 
                     {
                       contact: myContact,
                       setMyContact: {setMyContact}
-                    })}}>
+                    })*/}}>
 
                   <MiContacto 
                     name={item.name} 
@@ -104,7 +113,6 @@ const styles = StyleSheet.create({
     marginBottom: scale(20)
   },
   container: {
-    backgroundColor: Colors.dark.background,
     height: Dimensions.get('window').height,
     flex: 1,
     alignItems: 'flex-start',
