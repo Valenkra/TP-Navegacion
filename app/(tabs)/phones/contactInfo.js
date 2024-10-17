@@ -6,9 +6,11 @@ import { Colors } from "@/constants/Colors";
 import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Back from "@/components/Back";
+import DefineEmergencyContact from "@/components/DefineEmergencyContact";
 
 const ContactInfo = ({ route, navigation }) => {
-    const { contact } = route.params;
+    const { contact, setContact } = route.params;
+    console.log(contact)
     
     return(
         <SafeAreaView style={styles.container}>
@@ -20,6 +22,10 @@ const ContactInfo = ({ route, navigation }) => {
                     style={styles.contacto}
                 />
             </View>
+            <DefineEmergencyContact 
+                contact={contact}
+                setContact={setContact}
+            />
         </SafeAreaView>
     );
 }
@@ -49,7 +55,8 @@ const styles = StyleSheet.create({
     contacto:{
         fontSize: scale(40),
         lineHeight: scale(50),
-        width: scale(310)
+        width: scale(310),
+        color: Colors.dark.white
     }
 });
 

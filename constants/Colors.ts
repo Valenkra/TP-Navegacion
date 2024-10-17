@@ -27,7 +27,11 @@ export const Colors = {
     secondary: '#4287f5',
     secondaryAccent: '#5880bf',
     primary: '#eb8436',
-    primaryAccent: '#ba7832'
+    primaryAccent: '#ba7832',
+    red: '#e81700',
+    white: '#ffffff',
+    whiteLess: '#e0dfdc',
+    lightGray: '#464646'
   },
   screen: {
     contacto: {
