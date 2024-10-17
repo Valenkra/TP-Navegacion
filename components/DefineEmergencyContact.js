@@ -10,15 +10,11 @@ import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MyText } from "./MyText";
 import { State } from "react-native-gesture-handler";
+import { DeviceEventEmitter } from "react-native";
 
-export default function DefineEmergencyContact({ contact, setContact }) {
-    const changeState = () => {
-        let updateC = contact;
-        updateC.emergencyContact = (contact.emergencyContact == true) ? false : true;
-        setContact(updateC);
-    }
+export default function DefineEmergencyContact({ contact }) {
   return (
-        <Pressable onPress={() => changeState()} style={[styles.container, (contact.emergencyContact) ? styles.onContainer : styles.offContainer]}>
+        <Pressable onPress={DeviceEventEmitter.addListener("evet.updateContact", {updateContact(contact)})} style={[styles.container, (contact.emergencyContact) ? styles.onContainer : styles.offContainer]}>
             <MyText
                 type="default"
                 value={(contact.emergencyContact) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" }

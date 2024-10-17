@@ -15,6 +15,8 @@ import { scale } from 'react-native-size-matters';
 import NavigationContainer from '@react-navigation/native';
 import { Text } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { updateContact } from 'react-native-contacts';
+import { DeviceEventEmitter } from 'react-native';
 
 export const MARGIN = 20;
 
@@ -22,7 +24,6 @@ const Contacto = ({ navigation }) => {
   const { colors } = useTheme();
 
   const [contactos, setContactos] = useState();
-  const [myContact, setMyContact] = useState();
 
   useEffect(() => {
     (async () => {
@@ -40,18 +41,24 @@ const Contacto = ({ navigation }) => {
     })();
   }, []);
 
-  const defineContact = async (item) => {
-    return setMyContact(item);
-  }
+  const updateContact = (item) => {
+    setContactos(contactos.map(contact =>
+      contact.id === item.id ? {
+        ...contact,
+        attributes: contact.attributes.map(attr =>
+          attr.key === 'emergencyContact' ? { ...
+    attr, value: (item.emergencyContact === true) ? false : true } : attr
+    )
+   } : contact
+   ));
+   }; 
 
   const filtrarLista = () => {
-
     let contactsFiltered =  contactos.filter(c => c["name"] != undefined && c["phoneNumbers"] != undefined);
     for (let i = 0; i < contactsFiltered.length; i++) {
       contactsFiltered[i].emergencyContact = false;
       
     }
-    console.log("aaa".localeCompare("bb"))
     contactsFiltered[3].emergencyContact = true;
     return contactsFiltered.sort(function(a, b){
       let n1 = new String(a["name"]);
@@ -76,22 +83,18 @@ const Contacto = ({ navigation }) => {
               renderItem={({item}) => (
                 <Pressable onPress={()=>
                   { 
-                    defineContact(item); 
-                    console.log(myContact)
-                    /*
                     navigation.navigate("ContactInfo", 
                     {
-                      contact: myContact,
-                      setMyContact: {setMyContact}
-                    })*/}}>
+                      contact: item
+                    })}}>
 
                   <MiContacto 
-                    name={item.name} 
+                    name={item.name } 
                     myNum={ item.phoneNumbers[0].digits } 
                     isEmergency={item.emergencyContact}
-                    lastName={ (item.lastName != undefined) ? item.lastName : "-1"}
-                    firstName={ (item.firstName != undefined) ? item.firstName : "-1"}
-                    ></MiContacto>
+                    lastName={ (item.lastName != undefined) ? item.lastName : "-1" }
+                    firstName={ (item.firstName != undefined) ? item.firstName : "-1" }
+                  />
                 </Pressable>)}
               keyExtractor={item => item.id}
             />

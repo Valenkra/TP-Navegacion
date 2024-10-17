@@ -9,8 +9,7 @@ import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
 
 const ContactInfo = ({ route, navigation }) => {
-    const { contact, setContact } = route.params;
-    console.log(contact)
+    const { contact } = route.params;
     
     return(
         <SafeAreaView style={styles.container}>
@@ -24,7 +23,6 @@ const ContactInfo = ({ route, navigation }) => {
             </View>
             <DefineEmergencyContact 
                 contact={contact}
-                setContact={setContact}
             />
         </SafeAreaView>
     );
