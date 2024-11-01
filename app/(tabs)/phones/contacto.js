@@ -25,7 +25,7 @@ export const MARGIN = 20;
 const Contacto = ({ navigation }) => {
   const { colors } = useTheme();
   const [contactos, setContactos] = useState();
-  const { contacts, setContacts } = useContactContext();
+  const { setContacts } = useContactContext();
 
   useEffect(() => {
     (async () => {

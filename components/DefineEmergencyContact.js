@@ -11,20 +11,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { MyText } from "./MyText";
 import { State } from "react-native-gesture-handler";
 import { DeviceEventEmitter } from "react-native";
+import { useContactContext } from "@/context/contactContext";
 
-export default function DefineEmergencyContact({ contact }) {
-  return (
-        <Pressable>
-            <MyText
-                type="default"
-                value={(contact.emergencyContact) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" }
-                style={[styles.littleText, (contact.emergencyContact) ? styles.onContainer : styles.offContainer]}
-            />
-            {
-          <Ionicons size={20} style={[{marginLeft: 5}]} name={'shield'} color={(contact.emergencyContact) ? Colors.dark.red : Colors.dark.white}/>
-        }
-        </Pressable>
-  );
+export default function DefineEmergencyContact({ isEmergency, setPressed }) {
+    return (
+            <Pressable onPress={() => setPressed(true)}>
+                <MyText
+                    type="default"
+                    value={(isEmergency) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" }
+                    style={[styles.littleText, (isEmergency) ? styles.onContainer : styles.offContainer]}
+                />
+                {
+            <Ionicons size={20} style={[{marginLeft: 5}]} name={'shield'} color={(isEmergency === false) ? Colors.dark.red : Colors.dark.white}/>
+            }
+            </Pressable>
+    );
 }
 
 const styles = StyleSheet.create({

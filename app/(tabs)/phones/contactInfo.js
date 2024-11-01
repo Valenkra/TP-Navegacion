@@ -7,13 +7,30 @@ import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import contactContext from "@/context/contactContext";
 import { useContactContext } from "@/context/contactContext";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
-    const { contacts } = useContactContext();
+    const { setEC_id, EC_id, contacts, setContacts } = useContactContext();
+    const [pressed, setPressed] = useState(false);
+    const [isEmergency, setIsEmergency] = useState(contacts.filter(myContact => myContact.id === contact.id).emergencyContact)
+
+    useEffect(() => {
+        if(pressed == true){
+            setEC_id(contact.id);
+            setPressed(false);
+            setContacts(contacts.map(myContact =>
+                myContact.id === contact.id
+                    ? { ...myContact, emergencyContact: !myContact.emergencyContact }
+                    : { ...myContact, emergencyContact: false }
+                )
+            )
+            setIsEmergency(!isEmergency)
+        }
+    }, [pressed])
+
     return(
         <SafeAreaView style={styles.container}>
             <Back navigation={navigation}/>
@@ -25,7 +42,8 @@ const ContactInfo = ({ route, navigation }) => {
                 />
             </View>
             <DefineEmergencyContact 
-                contact={contact}
+                isEmergency={isEmergency}
+                setPressed={setPressed}
             />
         </SafeAreaView>
     );
