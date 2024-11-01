@@ -14,7 +14,7 @@ import { DeviceEventEmitter } from "react-native";
 
 export default function DefineEmergencyContact({ contact }) {
   return (
-        <Pressable onPress={DeviceEventEmitter.addListener("evet.updateContact", {updateContact(contact)})} style={[styles.container, (contact.emergencyContact) ? styles.onContainer : styles.offContainer]}>
+        <Pressable>
             <MyText
                 type="default"
                 value={(contact.emergencyContact) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" }

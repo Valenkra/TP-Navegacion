@@ -16,11 +16,11 @@ export default function Home() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Bienvenida maiula hermosa!</ThemedText>
+        <ThemedText type="title">Alooo!</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Te amo mucho</ThemedText>
+        <ThemedText type="subtitle">How are you</ThemedText>
         <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
