@@ -1,5 +1,5 @@
 import { MyText } from "@/components/MyText";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { scale } from "react-native-size-matters";
 import { Colors } from "@/constants/Colors";
@@ -8,17 +8,23 @@ import { Ionicons } from "@expo/vector-icons";
 import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
 import { useContext, useEffect, useState } from "react";
+import numFormatter from "@/helpers/numFormatter";
 import contactContext from "@/context/contactContext";
 import { useContactContext } from "@/context/contactContext";
+import Alerta from "@/components/Alerta";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { Modal } from "react-native";
+import { Pressable, Text } from "react-native";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
     const { setEC_id, EC_id, contacts, setContacts } = useContactContext();
     const [pressed, setPressed] = useState(false);
     const [isEmergency, setIsEmergency] = useState(contact.emergencyContact)
+    const [confirmarCambio, setConfirmarCambio] = useState(false);
 
     useEffect(() => {
-        if(pressed == true){
+        if(isEmergency == true){
             setEC_id(contact.id);
             setPressed(false);
             setContacts(contacts.map(myContact =>
@@ -31,8 +37,35 @@ const ContactInfo = ({ route, navigation }) => {
         }
     }, [pressed])
 
+    useEffect(() => {
+        if(confirmarCambio == true){
+            setEC_id(contact.id);
+            setPressed(false);
+            setContacts(contacts.map(myContact =>
+                myContact.id === contact.id
+                    ? { ...myContact, emergencyContact: !myContact.emergencyContact }
+                    : { ...myContact, emergencyContact: false }
+                )
+            )
+            setIsEmergency(!isEmergency)
+        }
+    }, [confirmarCambio])
+
     return(
         <SafeAreaView style={styles.container}>
+            {
+                (isEmergency == false && EC_id != undefined) ? 
+                    <Alerta
+                    title="Actualizar contacto de emergencia"
+                    description="Ya tienes un contacto de emergencia establecido. ¿Deseas cambiarlo?"
+                    trueButton="Actualizar"
+                    falseButton="Cancelar"
+                    setModalVisible={setPressed}
+                    modalVisible={pressed}
+                    setBool={setConfirmarCambio}
+                /> : ""
+            }
+
             <Back navigation={navigation}/>
             <View style={styles.titleContainer}>
                 <MyText type='title'style={styles.contacto}>{contact.name}</MyText>
@@ -41,6 +74,15 @@ const ContactInfo = ({ route, navigation }) => {
                 isEmergency={isEmergency}
                 setPressed={setPressed}
             />
+            <View style={[styles.elementContainer,
+            { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') } ]}>
+                <MyText type="default" style={{fontSize: scale(14)}}>celular</MyText>
+                <MyText style={{ fontSize: scale(16), color: useThemeColor({light: '', dark: ''}, 'primary') }}>{numFormatter.format(contact.phoneNumbers[0].digits)}</MyText>
+            </View>
+            <View style={[styles.elementContainer, styles.msgContainer,
+            { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') } ]}>
+                <MyText type="default" style={{fontSize: scale(14)}}>Mensaje de emergencia</MyText>
+            </View>
         </SafeAreaView>
     );
 }
@@ -72,7 +114,22 @@ const styles = StyleSheet.create({
         lineHeight: scale(50),
         width: scale(310),
         color: Colors.dark.white
+    },
+    elementContainer:{
+        display: 'flex',
+        borderRadius: scale(12),
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        paddingHorizontal: scale(20),
+        paddingVertical: scale(10),
+        width: Dimensions.get("screen").width - scale(40),
+        marginTop: scale(10),
+    },
+    msgContainer: {
+        minHeight: scale(150)
     }
 });
+      
 
 export default ContactInfo;
