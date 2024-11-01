@@ -3,15 +3,16 @@ import { Text, type TextProps, StyleSheet } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { Children } from 'react';
 
 interface MyTextProps extends TextProps {
   lightColor?: string;
   darkColor?: string;
-  type: 'default' | 'title' | 'defaultSemiBold' | 'subtitle';
-  value: string;
+  children: React.ReactNode;
+  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
-export function MyText({ style, lightColor, darkColor, type, value }: MyTextProps) {
+export function MyText({ style, lightColor, darkColor, type, children }: MyTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return (
@@ -24,7 +25,7 @@ export function MyText({ style, lightColor, darkColor, type, value }: MyTextProp
         type === 'subtitle' ? styles.subtitle : undefined,
         style,
       ]}
-    >{value}
+    >{children}
     </Text>
   );
 }

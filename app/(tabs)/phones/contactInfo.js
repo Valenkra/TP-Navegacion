@@ -15,7 +15,7 @@ const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
     const { setEC_id, EC_id, contacts, setContacts } = useContactContext();
     const [pressed, setPressed] = useState(false);
-    const [isEmergency, setIsEmergency] = useState(contacts.filter(myContact => myContact.id === contact.id).emergencyContact)
+    const [isEmergency, setIsEmergency] = useState(contact.emergencyContact)
 
     useEffect(() => {
         if(pressed == true){
@@ -35,11 +35,7 @@ const ContactInfo = ({ route, navigation }) => {
         <SafeAreaView style={styles.container}>
             <Back navigation={navigation}/>
             <View style={styles.titleContainer}>
-                <MyText
-                    type='title'
-                    value={contact.name}
-                    style={styles.contacto}
-                />
+                <MyText type='title'style={styles.contacto}>{contact.name}</MyText>
             </View>
             <DefineEmergencyContact 
                 isEmergency={isEmergency}

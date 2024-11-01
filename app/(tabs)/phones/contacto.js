@@ -45,7 +45,9 @@ const Contacto = ({ navigation }) => {
   const filtrarLista = () => {
     let contactsFiltered =  contacts.filter(c => c["name"] != undefined && c["phoneNumbers"] != undefined);
     for (let i = 0; i < contactsFiltered.length; i++) {
-      contactsFiltered[i].emergencyContact = false;
+      if(contactsFiltered[i].emergencyContact == undefined){
+          contactsFiltered[i].emergencyContact = false;
+      }
       
     }
     contactsFiltered[3].emergencyContact = true;
@@ -61,9 +63,8 @@ const Contacto = ({ navigation }) => {
         <View style={styles.titleContainer}>
           <MyText
             type='title'
-            value='Contactos'
             style={[styles.contacto, {color: useThemeColor({light: '', dark: ''}, 'text')}]}
-          />
+          >Contactos</MyText>
         </View>
         <FlatList
               directionalLockEnabled={true}

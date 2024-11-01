@@ -19,13 +19,11 @@ export default function DefineEmergencyContact({ isEmergency, setPressed }) {
             <Pressable onPress={() => setPressed(true)} style={[styles.container, 
                 (isEmergency) ? { backgroundColor: useThemeColor({light: '', dark: ''}, 'red') } 
                 : { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') }]} >
-                <MyText
-                    type="default"
-                    value={(isEmergency) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" }
-                    style={[styles.littleText, (isEmergency) ? 
-                                    { color: useThemeColor({light: '', dark: ''}, 'text') } : 
-                                    { color: useThemeColor({light: '', dark: ''}, 'text') }]}
-                />
+                <MyText type="default"
+                        style={[styles.littleText, (isEmergency) ? 
+                                        { color: useThemeColor({light: '', dark: ''}, 'text') } : 
+                                        { color: useThemeColor({light: '', dark: ''}, 'text') }]}
+                > {(isEmergency) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" } </MyText>
                 {
                 <Ionicons size={20} style={styles.icon} name={'shield'} color={(isEmergency === false) ? Colors.dark.red : Colors.dark.white}/>
             }

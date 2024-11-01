@@ -25,18 +25,9 @@ export default function MyProfile() {
     headerBackgroundColor={{ light: Colors.screen.profile.light, dark: Colors.screen.profile.dark }}
     headerImage={<Ionicons size={310} name="settings-outline" style={[styles.headerImage, {color: (Appearance.getColorScheme() === "dark") ? Colors.screen.profile.darkIcon : Colors.screen.profile.lightIcon}]} />}>
       <View style={styles.textContainer}>
-        <MyText
-          type='title'
-          value='Buenos días!'
-        />
-        <MyText
-          type='default'
-          value='Este es tu panel de control. Aquí se encuentra toda la información de tu perfil.'
-        />
-        <MyText
-          type='defaultSemiBold'
-          value='Esta un poco vacio, no?'
-        />
+        <MyText type='title'>Buenos días!</MyText>
+        <MyText type='default'>Este es tu panel de control. Aquí se encuentra toda la información de tu perfil.</MyText>
+        <MyText type='defaultSemiBold'>Esta un poco vacio, no?'</MyText>
       </View>
         <Input
           label='Cual es tu nombre'

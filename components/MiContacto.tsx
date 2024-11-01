@@ -25,24 +25,19 @@ export default function MiContacto({ name, myNum, id, isEmergency, lastName, fir
       <View style={[{width: '100%', display:'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}]}>
         <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
           <View style={styles.profilePicture}>
-            <MyText 
-              type="default"
-              value={(firstName != "-1" && lastName != "-1") ? (`${firstName[0]} ${lastName[0]}`) : name[0]}
-            />
+            <MyText type="default">{(firstName != "-1" && lastName != "-1") ? (`${firstName[0]} ${lastName[0]}`) : name[0]}</MyText>
           </View>
           <View>
             <MyText
             type="subtitle"
-            value={name}
             numberOfLines={1}
             style={{width: Dimensions.get('window').width - scale(MARGIN)* 2 - scale(150),
                     fontSize: scale(20), marginBottom: 3}}
-            />
+            >{name}</MyText>
             <MyText 
                 type="default"
-                value={numFormatter.format(myNum)}
                 style={styles.number}
-            />
+            >{numFormatter.format(myNum)}</MyText>
           </View>
         </View>
         {

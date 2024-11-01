@@ -13,11 +13,7 @@ export default function Back({ navigation }: NavProps){
     return(
         <Pressable onPress={() => {navigation.goBack()}} style={styles.container}>
             <Ionicons size={28} style={[{ marginBottom: -3 }]} name={'arrow-back-outline'} color={Colors.dark.secondary}/>
-            <MyText 
-                value="Volver"
-                type="default"
-                style={styles.arrowBack}
-            />
+            <MyText type="default" style={styles.arrowBack}>Volver</MyText>
         </Pressable>
     );
 };
