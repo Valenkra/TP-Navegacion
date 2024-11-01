@@ -24,9 +24,8 @@ export const MARGIN = 20;
 
 const Contacto = ({ navigation }) => {
   const { colors } = useTheme();
-  const [contactos, setContactos] = useState();
-  const { setContacts } = useContactContext();
-
+  const { contacts, setContacts } = useContactContext();
+  
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -37,27 +36,14 @@ const Contacto = ({ navigation }) => {
             Contacts.Fields.Image]
         });
         if (data.length > 0) {
-          setContactos(() => [...data]);
           setContacts(() => [...data]);
         }
       }
     })();
   }, []);
 
-  const updateContact = (item) => {
-    setContactos(contactos.map(contact =>
-      contact.id === item.id ? {
-        ...contact,
-        attributes: contact.attributes.map(attr =>
-          attr.key === 'emergencyContact' ? { ...
-      attr, value: (item.emergencyContact === true) ? false : true } : attr
-      )
-    } : contact
-    ));
-   }; 
-
   const filtrarLista = () => {
-    let contactsFiltered =  contactos.filter(c => c["name"] != undefined && c["phoneNumbers"] != undefined);
+    let contactsFiltered =  contacts.filter(c => c["name"] != undefined && c["phoneNumbers"] != undefined);
     for (let i = 0; i < contactsFiltered.length; i++) {
       contactsFiltered[i].emergencyContact = false;
       
@@ -82,7 +68,7 @@ const Contacto = ({ navigation }) => {
         <FlatList
               directionalLockEnabled={true}
               horizontal={false}
-              data={(contactos !== undefined) ? filtrarLista() : ""}
+              data={(contacts[0] !== undefined) ? filtrarLista() : ""}
               renderItem={({item}) => (
                 <Pressable onPress={()=>
                   { 
@@ -94,7 +80,7 @@ const Contacto = ({ navigation }) => {
                   <MiContacto 
                     name={item.name} 
                     myNum={ item.phoneNumbers[0].digits } 
-                    isEmergency={item.emergencyContact}
+                    isEmergency={ item.emergencyContact }
                     lastName={ (item.lastName != undefined) ? item.lastName : "-1" }
                     firstName={ (item.firstName != undefined) ? item.firstName : "-1" }
                   />

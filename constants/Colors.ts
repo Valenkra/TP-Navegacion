@@ -31,7 +31,8 @@ export const Colors = {
     red: '#e81700',
     white: '#ffffff',
     whiteLess: '#e0dfdc',
-    lightGray: '#464646'
+    lightGray: '#464646',
+    
   },
   screen: {
     contacto: {

@@ -9,20 +9,25 @@ import { Appearance } from "react-native";
 import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MyText } from "./MyText";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { State } from "react-native-gesture-handler";
 import { DeviceEventEmitter } from "react-native";
 import { useContactContext } from "@/context/contactContext";
 
 export default function DefineEmergencyContact({ isEmergency, setPressed }) {
     return (
-            <Pressable onPress={() => setPressed(true)}>
+            <Pressable onPress={() => setPressed(true)} style={[styles.container, 
+                (isEmergency) ? { backgroundColor: useThemeColor({light: '', dark: ''}, 'red') } 
+                : { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') }]} >
                 <MyText
                     type="default"
                     value={(isEmergency) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" }
-                    style={[styles.littleText, (isEmergency) ? styles.onContainer : styles.offContainer]}
+                    style={[styles.littleText, (isEmergency) ? 
+                                    { color: useThemeColor({light: '', dark: ''}, 'text') } : 
+                                    { color: useThemeColor({light: '', dark: ''}, 'text') }]}
                 />
                 {
-            <Ionicons size={20} style={[{marginLeft: 5}]} name={'shield'} color={(isEmergency === false) ? Colors.dark.red : Colors.dark.white}/>
+                <Ionicons size={20} style={styles.icon} name={'shield'} color={(isEmergency === false) ? Colors.dark.red : Colors.dark.white}/>
             }
             </Pressable>
     );
@@ -40,14 +45,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: scale(20),
         width: Dimensions.get("screen").width - scale(40),
-        height: scale(50)
-    },
-    onContainer: {
-        backgroundColor: Colors.dark.whiteLess,
-        color: Colors.dark.background
+        height: scale(50),
     },
     littleText: {
-        fontSize: scale(15),
-        lineHeight: scale(20)
+        fontSize: scale(14),
+        lineHeight: scale(15)
+    },
+    icon: {
+        position: 'absolute',
+        left: Dimensions.get("screen").width - scale(80)
     }
 });
