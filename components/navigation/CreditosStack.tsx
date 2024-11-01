@@ -13,7 +13,7 @@ const CreditosStackScreen = () => {
         headerShown: false
       }}>
         <CreditosStack.Screen 
-          name="Creditos" 
+          name="Profile" 
           component={CreditoScreen} 
           options={{ headerTitle: 'Sobre nosotros' }} // Configura el título para la pantalla de inicio
         />

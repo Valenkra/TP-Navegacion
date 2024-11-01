@@ -7,7 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { Dimensions } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
 import * as Contacts from 'expo-contacts';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import MiContacto from '@/components/MiContacto';
 import { FlatList } from 'react-native';
@@ -17,13 +17,15 @@ import { Text } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { updateContact } from 'react-native-contacts';
 import { DeviceEventEmitter } from 'react-native';
+import ContactContextProvider, { ContactContext } from '@/context/contactContext';
+import { useContactContext } from '@/context/contactContext';
 
 export const MARGIN = 20;
 
 const Contacto = ({ navigation }) => {
   const { colors } = useTheme();
-
   const [contactos, setContactos] = useState();
+  const { contacts, setContacts } = useContactContext();
 
   useEffect(() => {
     (async () => {
@@ -32,10 +34,11 @@ const Contacto = ({ navigation }) => {
         const { data } = await Contacts.getContactsAsync({
           fields: [Contacts.Fields.FirstName,
             Contacts.Fields.PhoneNumbers,
-          Contacts.Fields.Image]
+            Contacts.Fields.Image]
         });
         if (data.length > 0) {
-          setContactos([...data]);
+          setContactos(() => [...data]);
+          setContacts(() => [...data]);
         }
       }
     })();
@@ -47,10 +50,10 @@ const Contacto = ({ navigation }) => {
         ...contact,
         attributes: contact.attributes.map(attr =>
           attr.key === 'emergencyContact' ? { ...
-    attr, value: (item.emergencyContact === true) ? false : true } : attr
-    )
-   } : contact
-   ));
+      attr, value: (item.emergencyContact === true) ? false : true } : attr
+      )
+    } : contact
+    ));
    }; 
 
   const filtrarLista = () => {
@@ -68,7 +71,7 @@ const Contacto = ({ navigation }) => {
   }
 
   return (
-      <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>   
         <View style={styles.titleContainer}>
           <MyText
             type='title'
@@ -89,7 +92,7 @@ const Contacto = ({ navigation }) => {
                     })}}>
 
                   <MiContacto 
-                    name={item.name } 
+                    name={item.name} 
                     myNum={ item.phoneNumbers[0].digits } 
                     isEmergency={item.emergencyContact}
                     lastName={ (item.lastName != undefined) ? item.lastName : "-1" }
@@ -98,7 +101,7 @@ const Contacto = ({ navigation }) => {
                 </Pressable>)}
               keyExtractor={item => item.id}
             />
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 

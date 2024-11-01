@@ -7,10 +7,13 @@ import { Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
+import { useContext } from "react";
+import contactContext from "@/context/contactContext";
+import { useContactContext } from "@/context/contactContext";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
-    
+    const { contacts } = useContactContext();
     return(
         <SafeAreaView style={styles.container}>
             <Back navigation={navigation}/>

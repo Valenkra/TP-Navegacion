@@ -4,19 +4,20 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Ionicons } from '@expo/vector-icons';
+import { Appearance } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 export default function Home() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#0a4557' }}
       headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
+        <Ionicons size={310} name="newspaper" 
+          style={[styles.headerImage, {color: (Appearance.getColorScheme() === "dark") ? Colors.dark.icon : Colors.light.icon}]} />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Alooo!</ThemedText>
+        <ThemedText type="title">Novedades</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -55,6 +56,11 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
+    position: 'absolute',
+  },
+  headerImage: {
+    bottom: -100,
+    left: -50,
     position: 'absolute',
   },
 });
