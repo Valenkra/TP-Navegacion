@@ -12,9 +12,10 @@ interface InputProps extends TextInputProps {
   type?: "password";
   value?: string;
   optionalStyle?: TextStyle;
+  disabled?: boolean;
 }
 
-export default function Input({ label, size, placeholder, onChangeText, type, value, optionalStyle, ...rest }: InputProps) {
+export default function Input({ style, label, size, placeholder, onChangeText, type, value, optionalStyle, disabled = false, ...rest }: InputProps) {
   const [isActive, setIsActive] = useState(false);
   const [showPassword, setShowPassword] = useState(type ? false : true);
 
@@ -39,7 +40,7 @@ export default function Input({ label, size, placeholder, onChangeText, type, va
           <TextInput
             cursorColor={Colors.light.background}
             secureTextEntry={!showPassword}
-            style={getInputStyles(size, isActive)}
+            style={[getInputStyles(size, isActive), style]}
             placeholder={placeholder} 
             placeholderTextColor="grey"
             onFocus={handleFocus}

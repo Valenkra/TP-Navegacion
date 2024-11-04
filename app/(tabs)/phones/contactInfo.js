@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
 import { useContext, useEffect, useState } from "react";
+import { Keyboard } from "react-native";
 import numFormatter from "@/helpers/numFormatter";
 import contactContext from "@/context/contactContext";
 import { useContactContext } from "@/context/contactContext";
@@ -15,6 +16,8 @@ import Alerta from "@/components/Alerta";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Modal } from "react-native";
 import { Pressable, Text } from "react-native";
+import Input from "@/components/Input";
+import TextAreaInput from "@/components/TextAreaInput";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
@@ -52,7 +55,7 @@ const ContactInfo = ({ route, navigation }) => {
     }, [confirmarCambio])
 
     return(
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} onTouchStart={()=>Keyboard.dismiss()}>
             {
                 (isEmergency == false && EC_id != undefined) ? 
                     <Alerta
@@ -79,10 +82,11 @@ const ContactInfo = ({ route, navigation }) => {
                 <MyText type="default" style={{fontSize: scale(14)}}>celular</MyText>
                 <MyText style={{ fontSize: scale(16), color: useThemeColor({light: '', dark: ''}, 'primary') }}>{numFormatter.format(contact.phoneNumbers[0].digits)}</MyText>
             </View>
-            <View style={[styles.elementContainer, styles.msgContainer,
-            { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') } ]}>
-                <MyText type="default" style={{fontSize: scale(14)}}>Mensaje de emergencia</MyText>
-            </View>
+            <TextAreaInput
+                placeholder="Hola! Si te llegó este mensaje es porque estoy en una emergencia..."
+                disabled={!isEmergency}
+                label="Mensaje de emergencia"
+            />
         </SafeAreaView>
     );
 }
@@ -126,9 +130,6 @@ const styles = StyleSheet.create({
         width: Dimensions.get("screen").width - scale(40),
         marginTop: scale(10),
     },
-    msgContainer: {
-        minHeight: scale(150)
-    }
 });
       
 

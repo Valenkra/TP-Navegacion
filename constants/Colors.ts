@@ -32,7 +32,7 @@ export const Colors = {
     white: '#ffffff',
     whiteLess: '#e0dfdc',
     lightGray: '#464646',
-    
+    darkGray: '#262626'
   },
   screen: {
     contacto: {

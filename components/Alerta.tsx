@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: scale(10),
         padding: scale(20),
+        paddingBottom: scale(5),
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -91,9 +92,9 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
       },
       button: {
-        flex: 1,
+        flex: 1, 
+        paddingVertical: scale(20),
         alignItems: 'center',
-        marginTop: scale(16),
       },
       buttonCancel: {
         color: '#007AFF', // Estilo azul de iOS
