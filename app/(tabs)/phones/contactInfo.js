@@ -21,11 +21,14 @@ import TextAreaInput from "@/components/TextAreaInput";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
+    console.log(contact.emergencyContact);
     const { setEC_id, EC_id, contacts, setContacts } = useContactContext();
     const [pressed, setPressed] = useState(false);
-    const [isEmergency, setIsEmergency] = useState(contact.emergencyContact)
+    const [isEmergency, setIsEmergency] = useState((contact.emergencyContact));
     const [confirmarCambio, setConfirmarCambio] = useState(false);
 
+    useEffect(()=>{setIsEmergency(contact.emergencyContact)},[])
+    
     useEffect(() => {
         if(isEmergency == true){
             setEC_id(contact.id);
