@@ -21,14 +21,13 @@ import TextAreaInput from "@/components/TextAreaInput";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
-    console.log(contact.emergencyContact);
-    const { setEC_id, EC_id, contacts, setContacts } = useContactContext();
+    const { setEC_id, EC_id, contacts, setContacts, EC_msg, setEC_msg } = useContactContext();
     const [pressed, setPressed] = useState(false);
-    const [isEmergency, setIsEmergency] = useState((contact.emergencyContact));
+    const [isEmergency, setIsEmergency] = useState((contact.id == EC_id));
     const [confirmarCambio, setConfirmarCambio] = useState(false);
 
     useEffect(()=>{setIsEmergency(contact.emergencyContact)},[])
-    
+
     useEffect(() => {
         if(isEmergency == true){
             setEC_id(contact.id);
@@ -53,7 +52,8 @@ const ContactInfo = ({ route, navigation }) => {
                     : { ...myContact, emergencyContact: false }
                 )
             )
-            setIsEmergency(!isEmergency)
+            setEC_msg(null);
+            setIsEmergency(!isEmergency);
         }
     }, [confirmarCambio])
 
@@ -88,6 +88,7 @@ const ContactInfo = ({ route, navigation }) => {
             <TextAreaInput
                 placeholder="Hola! Si te llegó este mensaje es porque estoy en una emergencia..."
                 disabled={!isEmergency}
+                value={(!isEmergency) ? "" : EC_msg}
                 label="Mensaje de emergencia"
             />
         </SafeAreaView>
