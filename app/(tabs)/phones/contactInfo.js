@@ -18,17 +18,18 @@ const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
     const { EC_id, contacts, setContacts, EC_msg, setEC_msg, setEC_phone } = useContactContext();
     const [pressed, setPressed] = useState(false);
-    const [isEmergency, setIsEmergency] = useState((contact.id == EC_id));
+    const [isEmergency, setIsEmergency] = useState((contact.id == EC_id)? true : false);
     const [confirmarCambio, setConfirmarCambio] = useState(false);
-
-    console.log(EC_id, contact.id)
+    const [abriModal, setAbriModal] = useState(false);
+    let temp = 0;
 
     useEffect(() => {
-        if(isEmergency == true){
+        if(isEmergency == true && abriModal == true){
             setPressed(false);
+            setAbriModal(false);
             setContacts(contacts.map(myContact =>
                 myContact.id === contact.id
-                    ? { ...myContact, emergencyContact: false }
+                    ? { ...myContact, emergencyContact: !myContact.emergencyContact }
                     : { ...myContact, emergencyContact: false }
                 )
             )
@@ -36,22 +37,19 @@ const ContactInfo = ({ route, navigation }) => {
         }
     }, [pressed])
 
-    const activateEmergencyContact = () => {
-        setPressed(false);
-        setEC_phone(contact.phoneNumbers[0].digits)
-        setContacts(contacts.map(myContact =>
-            myContact.id === contact.id
-                ? { ...myContact, emergencyContact: true }
-                : { ...myContact, emergencyContact: false }
-            )
-        )
-        setEC_msg(null);
-        setIsEmergency(!isEmergency);
-    }
-
     useEffect(() => {
         if(confirmarCambio == true){
-            activateEmergencyContact();
+            if(abriModal)setPressed(false);
+            setEC_phone(contact.phoneNumbers[0].digits)
+            setContacts(contacts.map(myContact =>
+                myContact.id === contact.id
+                    ? { ...myContact, emergencyContact: true }
+                    : { ...myContact, emergencyContact: false }
+                )
+            )
+            setEC_msg(null);
+            setConfirmarCambio(false);
+            setIsEmergency(!isEmergency);
         }
     }, [confirmarCambio])
 
@@ -67,11 +65,12 @@ const ContactInfo = ({ route, navigation }) => {
                     setModalVisible={setPressed}
                     modalVisible={pressed}
                     setBool={setConfirmarCambio}
+                    setAbriModal={setAbriModal}
                 /> : ""
             }
 
             {
-                (pressed && EC_id == null) ? activateEmergencyContact() : ""
+                (pressed == true && EC_id == null) ? setConfirmarCambio(true) : ""
             }
 
             <Back navigation={navigation}/>

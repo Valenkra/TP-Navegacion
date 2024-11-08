@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import { scale } from "react-native-size-matters";
 import { MyText } from "./MyText";
@@ -13,10 +13,13 @@ interface AlertProps {
     setBool: React.Dispatch<React.SetStateAction<boolean | null>>;
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean | null>>;
+    setAbriModal: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 
-export default function Alerta({ description, trueButton, falseButton, title, setBool, setModalVisible, modalVisible }: AlertProps) {
-
+export default function Alerta({ description, trueButton, falseButton, title, setBool, setModalVisible, modalVisible, setAbriModal }: AlertProps) {
+  useEffect(() => {
+    setAbriModal(true);
+  }, [])
   return (
         <Modal
             animationType="fade"
