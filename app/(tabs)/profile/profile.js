@@ -94,6 +94,15 @@ export default function MyProfile() {
           style={styles.editButton}
           onPress={toggleEdit}
         />
+
+        {/* Botón para mostrar el contacto de emergencia */}
+        <Button
+          label="Ver contacto de emergencia"
+          size="medium"
+          type="secondary"
+          style={styles.emergencyButton}
+          onPress={() => navigation.navigate('MyProfileConfig')}
+        />
       </View>
     </SafeAreaView>
   );
@@ -156,6 +165,20 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: '#A10000',
+    marginTop: scale(10),
+    width: '60%',
+    height: scale(45),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: scale(10),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  emergencyButton: {
+    backgroundColor: '#3A86FF',
     marginTop: scale(10),
     width: '60%',
     height: scale(45),
