@@ -1,4 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { Accelerometer } from "expo-sensors";
+import * as SMS from 'expo-sms';
 
 type Contact = {
   id: string;
@@ -15,6 +17,8 @@ type ContactContextType = {
   setEC_id: React.Dispatch<React.SetStateAction<string | null>>; 
   EC_msg: string | null;
   setEC_msg: React.Dispatch<React.SetStateAction<string | null>>; 
+  EC_phone: string | null;
+  setEC_phone: React.Dispatch<React.SetStateAction<string | null>>; 
 };
 
 export const ContactContext = createContext<ContactContextType | undefined>(undefined);
@@ -27,14 +31,26 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [EC_id, setEC_id] = useState<string | null>(null);
   const [EC_msg, setEC_msg] = useState<string | null>(null);
+  const [EC_phone, setEC_phone] = useState<string | null>(null);
 
   useEffect(() => {
-    // Actualiza EC_id basado en el contacto marcado como emergencia
     const emergencyContact = contacts.find(contact => contact.emergencyContact === true);
     setEC_id(emergencyContact ? emergencyContact.id : null);
+    console.log(emergencyContact);
   }, [contacts]);
 
-  const value = { contacts, setContacts, EC_id, setEC_id, EC_msg, setEC_msg };
+  const value = { contacts, setContacts, EC_id, setEC_id, EC_msg, setEC_msg, EC_phone, setEC_phone };
+
+  useEffect(() => {
+    const subscription = Accelerometer.addListener(async ({ x, y, z }) => {
+      const shake = Math.sqrt(x * x + y * y + z * z);
+      if (shake > 3.5 && EC_id != null) {
+          await SMS.sendSMSAsync([EC_phone?EC_phone:""], (EC_msg) ? EC_msg : "Estoy en una emergencia! Necesito ayuda!!");
+        
+      }
+    });
+    return () => subscription && subscription.remove();
+  });
 
   return (
     <ContactContext.Provider value={value}>

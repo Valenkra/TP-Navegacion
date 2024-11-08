@@ -9,6 +9,7 @@ import { Appearance } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 export default function Home() {
+  
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#0a4557' }}

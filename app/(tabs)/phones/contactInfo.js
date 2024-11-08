@@ -16,20 +16,22 @@ import TextAreaInput from "@/components/TextAreaInput";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
-    const { setEC_id, EC_id, contacts, setContacts, EC_msg, setEC_msg } = useContactContext();
+    const { EC_id, contacts, setContacts, EC_msg, setEC_msg, setEC_phone } = useContactContext();
     const [pressed, setPressed] = useState(false);
     const [isEmergency, setIsEmergency] = useState((contact.id == EC_id));
     const [confirmarCambio, setConfirmarCambio] = useState(false);
 
     useEffect(()=>{setIsEmergency(contact.emergencyContact)},[])
 
+    useEffect(() => {console.log(`EC_id es: ${EC_id} ||||  Contact.id es: ${contact.id}`);
+    }, [EC_id]);
+    
     useEffect(() => {
         if(isEmergency == true){
-            setEC_id(contact.id);
             setPressed(false);
             setContacts(contacts.map(myContact =>
                 myContact.id === contact.id
-                    ? { ...myContact, emergencyContact: !myContact.emergencyContact }
+                    ? { ...myContact, emergencyContact: false }
                     : { ...myContact, emergencyContact: false }
                 )
             )
@@ -37,25 +39,28 @@ const ContactInfo = ({ route, navigation }) => {
         }
     }, [pressed])
 
+    const activateEmergencyContact = () => {
+        setPressed(false);
+        setContacts(contacts.map(myContact =>
+            myContact.id === contact.id
+                ? { ...myContact, emergencyContact: true }
+                : { ...myContact, emergencyContact: false }
+            )
+        )
+        setEC_msg(null);
+        setIsEmergency(!isEmergency);
+    }
+
     useEffect(() => {
         if(confirmarCambio == true){
-            setEC_id(contact.id);
-            setPressed(false);
-            setContacts(contacts.map(myContact =>
-                myContact.id === contact.id
-                    ? { ...myContact, emergencyContact: !myContact.emergencyContact }
-                    : { ...myContact, emergencyContact: false }
-                )
-            )
-            setEC_msg(null);
-            setIsEmergency(!isEmergency);
+            activateEmergencyContact();
         }
     }, [confirmarCambio])
 
     return(
         <SafeAreaView style={styles.container} onTouchStart={()=>Keyboard.dismiss()}>
             {
-                (isEmergency == false && EC_id != undefined) ? 
+                (isEmergency == false && EC_id != undefined && EC_id != null) ? 
                     <Alerta
                     title="Actualizar contacto de emergencia"
                     description="Ya tienes un contacto de emergencia establecido. ¿Deseas cambiarlo?"
@@ -64,7 +69,7 @@ const ContactInfo = ({ route, navigation }) => {
                     setModalVisible={setPressed}
                     modalVisible={pressed}
                     setBool={setConfirmarCambio}
-                /> : ""
+                /> : activateEmergencyContact()
             }
 
             <Back navigation={navigation}/>

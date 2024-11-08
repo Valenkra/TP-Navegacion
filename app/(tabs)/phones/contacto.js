@@ -52,7 +52,6 @@ const Contacto = ({ navigation }) => {
       }
       
     }
-    contactsFiltered[3].emergencyContact = true;
     return contactsFiltered.sort(function(a, b){
       let n1 = new String(a["name"]);
       let n2 = new String(b["name"]);
