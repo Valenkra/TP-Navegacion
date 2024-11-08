@@ -27,7 +27,6 @@ const Contacto = ({ navigation }) => {
   const { colors } = useTheme();
   const { contacts, setContacts } = useContactContext();
 
-
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -50,7 +49,6 @@ const Contacto = ({ navigation }) => {
       if(contactsFiltered[i].emergencyContact == undefined){
           contactsFiltered[i].emergencyContact = false;
       }
-      
     }
     return contactsFiltered.sort(function(a, b){
       let n1 = new String(a["name"]);

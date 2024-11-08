@@ -21,11 +21,8 @@ const ContactInfo = ({ route, navigation }) => {
     const [isEmergency, setIsEmergency] = useState((contact.id == EC_id));
     const [confirmarCambio, setConfirmarCambio] = useState(false);
 
-    useEffect(()=>{setIsEmergency(contact.emergencyContact)},[])
+    console.log(EC_id, contact.id)
 
-    useEffect(() => {console.log(`EC_id es: ${EC_id} ||||  Contact.id es: ${contact.id}`);
-    }, [EC_id]);
-    
     useEffect(() => {
         if(isEmergency == true){
             setPressed(false);
@@ -41,6 +38,7 @@ const ContactInfo = ({ route, navigation }) => {
 
     const activateEmergencyContact = () => {
         setPressed(false);
+        setEC_phone(contact.phoneNumbers[0].digits)
         setContacts(contacts.map(myContact =>
             myContact.id === contact.id
                 ? { ...myContact, emergencyContact: true }
@@ -69,7 +67,11 @@ const ContactInfo = ({ route, navigation }) => {
                     setModalVisible={setPressed}
                     modalVisible={pressed}
                     setBool={setConfirmarCambio}
-                /> : activateEmergencyContact()
+                /> : ""
+            }
+
+            {
+                (pressed && EC_id == null) ? activateEmergencyContact() : ""
             }
 
             <Back navigation={navigation}/>

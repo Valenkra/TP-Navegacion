@@ -36,7 +36,6 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
   useEffect(() => {
     const emergencyContact = contacts.find(contact => contact.emergencyContact === true);
     setEC_id(emergencyContact ? emergencyContact.id : null);
-    console.log(emergencyContact);
   }, [contacts]);
 
   const value = { contacts, setContacts, EC_id, setEC_id, EC_msg, setEC_msg, EC_phone, setEC_phone };
@@ -45,8 +44,7 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
     const subscription = Accelerometer.addListener(async ({ x, y, z }) => {
       const shake = Math.sqrt(x * x + y * y + z * z);
       if (shake > 3.5 && EC_id != null) {
-          await SMS.sendSMSAsync([EC_phone?EC_phone:""], (EC_msg) ? EC_msg : "Estoy en una emergencia! Necesito ayuda!!");
-        
+        await SMS.sendSMSAsync([EC_phone?EC_phone:""], (EC_msg) ? EC_msg : "Estoy en una emergencia! Necesito ayuda!!");
       }
     });
     return () => subscription && subscription.remove();
