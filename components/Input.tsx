@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Text, TextInputProps, TextStyle } from "react-native";
 import { Colors } from "@/constants/Colors";
-import { scale, verticalScale } from "react-native-size-matters";
-import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
+import { scale } from "react-native-size-matters";
 
 interface InputProps extends TextInputProps {
   label: string;
-  size: "normal" | "large" ;
+  size: "normal" | "large";
   placeholder: string;
-  //onChangeText: (text: string) => void;
   type?: "password";
   value?: string;
   optionalStyle?: TextStyle;
@@ -19,7 +17,7 @@ export default function Input({ style, label, size, placeholder, onChangeText, t
   const [isActive, setIsActive] = useState(false);
   const [showPassword, setShowPassword] = useState(type ? false : true);
 
-  const toggleShowPassword = () => { 
+  const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
@@ -31,25 +29,23 @@ export default function Input({ style, label, size, placeholder, onChangeText, t
     setIsActive(false);
   };
 
-  // Creo que cuando se escribe un valor en el input de tipo password, se escribe, pero cuando se alterna de estado a oculto, se reinicia el valor del input
-
   return (
-    <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
-        <Text style={styles.label}>{label}</Text>
-        <View style={[{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}, generateBoxShadowStyle(0, verticalScale(1.66), Colors.light.background, 0.52, 2, 5), optionalStyle]}>
-          <TextInput
-            cursorColor={Colors.light.background}
-            secureTextEntry={!showPassword}
-            style={[getInputStyles(size, isActive), style]}
-            placeholder={placeholder} 
-            placeholderTextColor="grey"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onChangeText={onChangeText}
-            value={value}
-            {...rest}
-          />
-        </View>
+    <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={[{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }, optionalStyle]}>
+        <TextInput
+          cursorColor={Colors.light.background}
+          secureTextEntry={!showPassword}
+          style={[getInputStyles(size, isActive), style]}
+          placeholder={placeholder}
+          placeholderTextColor="grey"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChangeText={onChangeText}
+          value={value}
+          {...rest}
+        />
+      </View>
     </View>
   );
 }
@@ -88,8 +84,8 @@ const styles = StyleSheet.create({
     color: Colors.light.background,
     marginBottom: scale(3.6)
   },
-  icon: { 
-    marginLeft: scale(-28.75), 
+  icon: {
+    marginLeft: scale(-28.75),
   },
   inputContainer: {
     padding: 10,
