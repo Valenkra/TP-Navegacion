@@ -19,13 +19,15 @@ import { updateContact } from 'react-native-contacts';
 import { DeviceEventEmitter } from 'react-native';
 import ContactContextProvider, { ContactContext } from '@/context/contactContext';
 import { useContactContext } from '@/context/contactContext';
+import { DeviceMotion } from 'expo-sensors';
 
 export const MARGIN = 20;
 
 const Contacto = ({ navigation }) => {
   const { colors } = useTheme();
   const { contacts, setContacts } = useContactContext();
-  
+
+
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();

@@ -4,19 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { scale } from "react-native-size-matters";
 import { Colors } from "@/constants/Colors";
 import { Dimensions } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
 import { useContext, useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import numFormatter from "@/helpers/numFormatter";
-import contactContext from "@/context/contactContext";
 import { useContactContext } from "@/context/contactContext";
 import Alerta from "@/components/Alerta";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { Modal } from "react-native";
-import { Pressable, Text } from "react-native";
-import Input from "@/components/Input";
 import TextAreaInput from "@/components/TextAreaInput";
 
 const ContactInfo = ({ route, navigation }) => {

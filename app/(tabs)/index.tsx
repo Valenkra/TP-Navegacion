@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Platform, Alert } from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -7,15 +7,41 @@ import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
 import { Appearance } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import Shake from 'react-native-shake';
 
 export default function Home() {
+  const [shakeDetected, setShakeDetected] = useState(false);
+
+  useEffect(() => {
+    const shakeSubscription = Shake.addListener(() => {
+      setShakeDetected(true);
+      console.log("aloha")
+    });
+
+    return () => {
+      shakeSubscription.remove();
+    };
+  }, []);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#0a4557' }}
       headerImage={
-        <Ionicons size={310} name="newspaper" 
-          style={[styles.headerImage, {color: (Appearance.getColorScheme() === "dark") ? Colors.dark.icon : Colors.light.icon}]} />
-      }>
+        <Ionicons
+          size={310}
+          name="newspaper"
+          style={[
+            styles.headerImage,
+            {
+              color:
+                Appearance.getColorScheme() === 'dark'
+                  ? Colors.dark.icon
+                  : Colors.light.icon,
+            },
+          ]}
+        />
+      }
+    >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Novedades</ThemedText>
         <HelloWave />
