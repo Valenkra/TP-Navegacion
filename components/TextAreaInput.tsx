@@ -7,22 +7,25 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
 import { MyText } from "./MyText";
 import { Keyboard } from "react-native";
+import { useContactContext } from "@/context/contactContext";
 
 interface InputProps extends TextInputProps {
     label: string;
     placeholder: string;
     disabled?: boolean;
+    value?: string;
 }
 
-export default function TextAreaInput({ style, label, placeholder, disabled = false, ...rest }: InputProps) {
+export default function TextAreaInput({ style, label, placeholder, disabled = false, value, ...rest }: InputProps) {
+    const { setEC_msg } = useContactContext();
   return (
     <View style={styles.container} onTouchStart={()=>Keyboard.dismiss()}>
         <MyText type="default" style={{fontSize: scale(14)}}>{label}</MyText>
         <View style={[styles.elementContainer, styles.msgContainer, 
             { backgroundColor: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'darkGray' : 'lightGray')) } ]}>
-                <TextInput onSubmitEditing={Keyboard.dismiss} blurOnSubmit={true} multiline={true} numberOfLines={10} style={[{fontSize: scale(14)},
+                <TextInput onChangeText={(e) => setEC_msg(e)} onSubmitEditing={Keyboard.dismiss} blurOnSubmit={true} multiline={true} numberOfLines={10} style={[{fontSize: scale(14)},
                     { color: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'lightGray' : 'text')) } ]} 
-                    editable={!disabled} placeholder={placeholder}>
+                    editable={!disabled} placeholder={placeholder} value={value}>
                 </TextInput>
         </View>
     </View>
