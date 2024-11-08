@@ -7,22 +7,8 @@ import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
 import { Appearance } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import Shake from 'react-native-shake';
 
 export default function Home() {
-  const [shakeDetected, setShakeDetected] = useState(false);
-
-  useEffect(() => {
-    const shakeSubscription = Shake.addListener(() => {
-      setShakeDetected(true);
-      console.log("aloha")
-    });
-
-    return () => {
-      shakeSubscription.remove();
-    };
-  }, []);
-
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#0a4557' }}
