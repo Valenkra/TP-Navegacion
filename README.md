@@ -1,50 +1,81 @@
-# Welcome to your Expo app 👋
+# CallMe - Emergency Contacts App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**CallMe** is an easy-to-use mobile application designed to help you store and quickly access your emergency contacts. In critical situations, every second counts, and CallMe ensures that you can reach your loved ones, medical professionals, or emergency services with just a tap.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Emergency Contact List**: Store multiple emergency contacts including family, friends, and medical providers.
+- **One-Tap Emergency Call**: With one click, instantly dial your pre-configured emergency contacts.
+- **Favorites & Categories**: Organize contacts into categories (e.g., Medical, Family, Friends) for easy access.
+- **Share Location**: Share your real-time location with your emergency contacts through text or email.
+- **Customizable Emergency Messages**: Send preset messages (e.g., "I'm in trouble!") to your contacts with your location.
+- **Lock Screen Access**: Access your emergency contacts directly from the lock screen for rapid response.
+- **Health Information Storage**: Optionally store critical health information (e.g., allergies, blood type) for medical responders.
 
-   ```bash
-   npm install
-   ```
+## Installation
 
-2. Start the app
+To install CallMe on your device, follow these instructions:
 
-   ```bash
-    npx expo start
-   ```
+### Android
+1. Download the APK from [CallMe Android](#) or search for **CallMe** in the Google Play Store.
+2. Open the app and follow the setup wizard to add your emergency contacts.
 
-In the output, you'll find options to open the app in a
+### iOS
+1. Download **CallMe** from the Apple App Store.
+2. Open the app and follow the on-screen instructions to set up your emergency contacts.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Usage
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. **Add Emergency Contacts**:
+   - Open the app and go to the "Contacts" tab.
+   - Tap the "+" button to add new contacts.
+   - Choose from your phone's contact list and assign a category (e.g., "Family", "Medical").
+   
+2. **Set Up Favorites**:
+   - Mark your most important contacts as favorites for quicker access.
+   
+3. **Configure Emergency Settings**:
+   - Go to "Settings" to customize your emergency message and location sharing preferences.
 
-## Get a fresh project
+4. **Use Emergency Features**:
+   - In case of an emergency, tap the "Emergency Call" button to instantly call your primary emergency contact.
+   - Tap "Share Location" to send your real-time GPS location to your selected contacts.
 
-When you're ready, run:
+## Screenshots
 
-```bash
-npm run reset-project
-```
+![Screenshot 1](./screenshots/screenshot1.png)
+![Screenshot 2](./screenshots/screenshot2.png)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Technologies Used
 
-## Learn more
+- **React Native** for cross-platform mobile development.
+- **Firebase** for real-time contact sync and notifications.
+- **Google Maps API** for location sharing.
+- **Twilio** for sending emergency SMS messages.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Contributing
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+We welcome contributions to make CallMe even more reliable and useful. To contribute, follow these steps:
 
-## Join the community
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Open a pull request to the `main` branch.
 
-Join our community of developers creating universal apps.
+## License
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+CallMe is open-source and released under the MIT License. See the [LICENSE](./LICENSE) file for more information.
+
+## Contact
+
+For support or inquiries, please contact us at [support@callmeapp.com](mailto:support@callmeapp.com).
+
+## Acknowledgements
+
+- Thanks to the open-source community for the libraries and tools that helped build this app.
+- Special thanks to our testers and early adopters for their valuable feedback.
+
+---
+
+Stay safe and always be prepared with **CallMe**!
