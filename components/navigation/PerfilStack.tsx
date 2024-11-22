@@ -19,7 +19,7 @@ const PerfilStackScreen = () => {
           options={{ headerTitle: 'Mi Perfil' }} // Configura el título para la pantalla de inicio
         />
         <PerfilStack.Screen 
-          name="Configuracion" 
+          name="Config" 
           component={MyProfileConfig} 
           options={{ headerTitle: 'Mi Perfil' }} // Configura el título para la pantalla de inicio
         />

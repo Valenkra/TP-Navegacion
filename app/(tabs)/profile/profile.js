@@ -4,14 +4,13 @@ import { Colors } from '@/constants/Colors';
 import { MyText } from '@/components/MyText';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { scale } from 'react-native-size-matters';
 
-export default function MyProfile() {
-  const navigation = useNavigation();
-  const [isEditing, setIsEditing] = React.useState(false);
+const MyProfile = ({navigation}) => {
+  const [isEditing, setIsEditing] = React.useState(true);
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [birthdate, setBirthdate] = React.useState("");
@@ -101,7 +100,7 @@ export default function MyProfile() {
           size="medium"
           type="secondary"
           style={styles.emergencyButton}
-          onPress={() => navigation.navigate('MyProfileConfig')}
+          onPress={() => navigation.navigate('Config')}
         />
       </View>
     </SafeAreaView>
@@ -192,3 +191,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
+
+export default MyProfile;
