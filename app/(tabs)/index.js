@@ -5,6 +5,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
+import { BellWave } from '@/components/BellWave';
 import { Appearance } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
@@ -30,24 +31,34 @@ export default function Home() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Novedades</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Funcionalidades</ThemedText>
+        <BellWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">How are you</ThemedText>
+        <ThemedText type="subtitle">Contactos</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
+          Pantalla de visualización de todos los Contactos del Teléfono.
         </ThemedText>
       </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+        <ThemedText type="subtitle">Llamado de emergencia</ThemedText>
         <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+        Cuando en la pantalla principal se sacuda rápidamente se envía un SMS al número configurado para tal fin. 
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Configuración de Nro. de emergencia</ThemedText>
+        <ThemedText>
+          Pantalla de configuración de Número telefónico de emergencia/aviso.
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Mensajes al usuario</ThemedText>
+        <ThemedText>
+          Cada vez que se muestra un error, se muestra con un Alert y al mismo tiempo el dispositivo Vibra. 
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>

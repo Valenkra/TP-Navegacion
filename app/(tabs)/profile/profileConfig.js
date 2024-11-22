@@ -7,6 +7,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Input from '@/components/Input';
+import Back from '@/components/Back';
 import { MyText } from '@/components/MyText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native';
@@ -15,53 +16,39 @@ import { Appearance } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import * as React from 'react';
 import { Button } from 'react-native';
+import { useThemeColor } from '@/hooks/useThemeColor';
 import { useNavigation } from '@react-navigation/native';
 
 export default function MyProfileConfig() {
   const navigation = useNavigation();
 
   return (
-    <ParallaxScrollView
-    headerBackgroundColor={{ light: Colors.screen.profile.light, dark: Colors.screen.profile.dark }}
-    headerImage={<Ionicons size={310} name="settings-outline" style={[styles.headerImage, {color: (Appearance.getColorScheme() === "dark") ? Colors.screen.profile.darkIcon : Colors.screen.profile.lightIcon}]} />}>
-      <View style={styles.textContainer}>
-      <Button
-      title="Back"
-      onPress={() => {
-        navigation.goBack();
-      }}
-    />
-        <MyText
-          type='title'
-          value='Buenos días!'
-        />
-        <MyText
-          type='default'
-          value='Este es tu panel de control. Aquí se encuentra toda la información de tu perfil.'
-        />
-        <MyText
-          type='defaultSemiBold'
-          value='Esta un poco vacio, no?'
-        />
+    <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
+      <Back navigation={navigation}/>
+      <View style={styles.titleContainer}>
+          <MyText type='title'style={[styles.contacto, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>Contacto de Emergencia</MyText>
       </View>
-        <Input
-          label='Cual es tu nombre'
-          size='normal'
-          placeholder='aloha'
-        />
-  </ParallaxScrollView>
+  </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  textContainer: {
+  container: {
+    height: Dimensions.get('window').height,
     flex: 1,
-    gap: scale(5),
-    marginBottom: scale(8)
+    alignItems: 'flex-start',
+    paddingHorizontal: scale(20),
+    paddingTop: scale(20),
   },
-  headerImage: {
-    bottom: -100,
-    left: -90,
-    position: 'absolute',
+  titleContainer: {
+    display:'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginBottom: scale(20)
   },
+  contacto:{
+    fontSize: scale(40),
+    lineHeight: scale(50),
+    width: scale(310),
+},
 });

@@ -1,13 +1,17 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Keyboard } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { MyText } from '@/components/MyText';
+import { Text } from 'react-native';
+import { useThemeColor } from '@/hooks/useThemeColor';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Back from '@/components/Back';
 import * as React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation, useTheme } from '@react-navigation/native';
-import { scale } from 'react-native-size-matters';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const MyProfile = ({navigation}) => {
   const [isEditing, setIsEditing] = React.useState(true);
@@ -32,31 +36,31 @@ const MyProfile = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons
-          name="arrow-back"
-          size={24}
-          color="#A1A1A1"
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        />
-        <MyText type="title" style={styles.title}>Perfil</MyText>
-      </View>
-
-      <View style={styles.profileContainer}>
-        <TouchableOpacity onPress={pickImage}>
-          <Image
-            source={{
-              uri: profileImage
-                ? profileImage
-                : 'https://media.istockphoto.com/id/1495088043/es/vector/icono-de-perfil-de-usuario-avatar-o-icono-de-persona-foto-de-perfil-s%C3%ADmbolo-de-retrato.jpg?s=612x612&w=0&k=20&c=mY3gnj2lU7khgLhV6dQBNqomEGj3ayWH-xtpYuCXrzk=',
-            }}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.infoContainer}>
+    <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.titleContainer}>
+          <MyText
+            type='title'
+            style={[styles.perfil, {color: useThemeColor({light: '', dark: ''}, 'text')}]}
+          >Mi Perfil</MyText>
+        </View>
+        <View style={[styles.topContainer, styles.div]}>
+          <View style={styles.profileContainer}>
+            <TouchableOpacity onPress={pickImage}>
+              <Image
+                source={{
+                  uri: profileImage
+                    ? profileImage
+                    : 'https://media.istockphoto.com/id/1495088043/es/vector/icono-de-perfil-de-usuario-avatar-o-icono-de-persona-foto-de-perfil-s%C3%ADmbolo-de-retrato.jpg?s=612x612&w=0&k=20&c=mY3gnj2lU7khgLhV6dQBNqomEGj3ayWH-xtpYuCXrzk=',
+                }}
+                resizeMode='cover'
+                style={styles.profileImage}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text onPress={pickImage} style={[styles.editar, {color: useThemeColor({light: '', dark: ''}, 'secondary')}]}>Editar foto</Text>
+        </View>
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.infoContainer, styles.div]}>
           <Input
             label="Nombre"
             size="normal"
@@ -71,6 +75,7 @@ const MyProfile = ({navigation}) => {
             size="normal"
             placeholder="Teléfono"
             value={phone}
+            type='phone-pad'
             onChangeText={setPhone}
             editable={isEditing}
             optionalStyle={styles.input}
@@ -84,112 +89,82 @@ const MyProfile = ({navigation}) => {
             editable={isEditing}
             optionalStyle={styles.input}
           />
+        </ScrollView>
+        <View style={styles.btnContainer}>
+          <Button
+            label={isEditing ? "Guardar" : "Editar"}
+            size="medium"
+            type="primary"
+            onPress={toggleEdit}
+          />
+          <Button
+            label="Ver contacto de emergencia"
+            size="medium"
+            type="secondary"
+            onPress={() => navigation.navigate('Config')}
+          />
         </View>
-
-        <Button
-          label={isEditing ? "Guardar" : "Editar"}
-          size="medium"
-          type="primary"
-          style={styles.editButton}
-          onPress={toggleEdit}
-        />
-
-        {/* Botón para mostrar el contacto de emergencia */}
-        <Button
-          label="Ver contacto de emergencia"
-          size="medium"
-          type="secondary"
-          style={styles.emergencyButton}
-          onPress={() => navigation.navigate('Config')}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  
   container: {
     flex: 1,
     backgroundColor: '#1C1C1E',
-    paddingHorizontal: scale(16),
+    justifyContent: 'flex-start',
+  },
+  div: {
+    borderBottomWidth: scale(1),
+    borderBottomColor: '#3d3d3d'
+  },
+  topContainer:{
+    display: 'flex',
+    flexDirection:'column',
+    alignContent: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    top: scale(40),
-    left: scale(16),
-  },
-  backButton: {
-    marginRight: scale(8),
-  },
-  title: {
-    fontSize: scale(18),
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-  },
-  profileContainer: {
-    width: '90%',
-    backgroundColor: '#2C2C2E',
-    borderRadius: scale(20),
-    paddingVertical: scale(20),
-    paddingHorizontal: scale(20),
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
+    marginVertical: verticalScale(20),
   },
   profileImage: {
-    width: scale(120),
-    height: scale(120),
-    borderRadius: scale(60),
-    marginBottom: scale(20),
+    width:'100%',
+    height: '100%',
     borderWidth: 3,
     borderColor: '#A1A1A1',
-  },
-  infoContainer: {
-    width: '100%',
-    marginTop: scale(10),
+    borderRadius: scale(60),
     marginBottom: scale(20),
   },
-  input: {
-    width: '100%',
-    marginVertical: scale(8),
-    borderRadius: scale(10),
-    padding: scale(10),
+  profileContainer:{
+    alignSelf: 'center',
+    width: scale(120),
+    height: scale(100),
   },
-  editButton: {
-    backgroundColor: '#A10000',
-    marginTop: scale(10),
-    width: '60%',
-    height: scale(45),
+  editar: {
+    color: '#ffffff',
+    textAlign: 'center',
+    marginTop: verticalScale(35),
+    paddingBottom: verticalScale(20)
+  },
+  infoContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginTop: scale(-15),
+    paddingBottom: scale(25)
+  },
+  btnContainer: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: scale(10),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 5,
-    elevation: 5,
+    marginVertical: verticalScale(20)
   },
-  emergencyButton: {
-    backgroundColor: '#3A86FF',
-    marginTop: scale(10),
-    width: '60%',
-    height: scale(45),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: scale(10),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 5,
-    elevation: 5,
-  },
+  perfil: {
+    fontSize: scale(35),
+    lineHeight: scale(40),
+    paddingHorizontal: scale(20),
+    paddingTop: scale(20),
+  }
 });
 
 

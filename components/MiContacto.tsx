@@ -6,6 +6,7 @@ import { MyText } from "./MyText";
 import { Dimensions } from "react-native";
 import numFormatter from "@/helpers/numFormatter";
 import { Ionicons } from "@expo/vector-icons";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface ContactoProps {
   name: string;
@@ -25,7 +26,7 @@ export default function MiContacto({ name, myNum, id, isEmergency, lastName, fir
       <View style={[{width: '100%', display:'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}]}>
         <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
           <View style={styles.profilePicture}>
-            <MyText type="default">{(firstName != "-1" && lastName != "-1") ? (`${firstName[0]} ${lastName[0]}`) : name[0]}</MyText>
+            <MyText type="default" style={{ color: useThemeColor({light: '', dark: ''}, 'background') }}>{(firstName != "-1" && lastName != "-1") ? (`${firstName[0]} ${lastName[0]}`) : name[0]}</MyText>
           </View>
           <View>
             <MyText

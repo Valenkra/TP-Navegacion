@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Text, TextInputProps, TextStyle } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { scale } from "react-native-size-matters";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Keyboard } from "react-native";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { verticalScale } from "react-native-size-matters";
+import { Dimensions } from "react-native";
 
 interface InputProps extends TextInputProps {
   label: string;
   size: "normal" | "large";
   placeholder: string;
-  type?: "password";
+  type?: "default";
   value?: string;
   optionalStyle?: TextStyle;
   disabled?: boolean;
@@ -30,11 +35,10 @@ export default function Input({ style, label, size, placeholder, onChangeText, t
   };
 
   return (
-    <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-      <Text style={styles.label}>{label}</Text>
-      <View style={[{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }, optionalStyle]}>
+    <View style={styles.container}>
+      <Text style={[styles.label, {color: useThemeColor({light: '', dark: ''}, 'text')}]}>{label}</Text>
+      <TouchableWithoutFeedback style={[{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }, optionalStyle]}>
         <TextInput
-          cursorColor={Colors.light.background}
           secureTextEntry={!showPassword}
           style={[getInputStyles(size, isActive), style]}
           placeholder={placeholder}
@@ -43,9 +47,10 @@ export default function Input({ style, label, size, placeholder, onChangeText, t
           onBlur={handleBlur}
           onChangeText={onChangeText}
           value={value}
+          keyboardType={type}
           {...rest}
         />
-      </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -53,23 +58,32 @@ export default function Input({ style, label, size, placeholder, onChangeText, t
 function getInputStyles(size: InputProps['size'], isActive: boolean) {
   return [
     styles.input,
-    isActive ? styles.active : null,
-    size === "normal" ? styles.normal : styles.large
+    size === "normal" ? styles.normal : styles.large,
+    { color: useThemeColor({light: '', dark: ''}, 'text'),
+      borderTopColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'background'),
+      borderLeftColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'lightGray'),
+      borderRightColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'lightGray'),
+      borderBottomColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'darkGray' : 'lightGray')  }
   ];
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: scale(20),
+    marginVertical: verticalScale(5),
+  },
   input: {
     borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    width: scale(263.85),
-    backgroundColor: Colors.dark.background,
-    color: Colors.light.background,
-    paddingLeft: scale(14.36)
+    paddingLeft: scale(14.36),
+    borderWidth: scale(1),
+    marginLeft: scale(6),
+    width: Dimensions.get("screen").width - scale(110)
   },
   active: {
-    borderWidth: 1,
     borderColor: Colors.dark.background,
   },
   normal: {
@@ -80,15 +94,9 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: 'Regular',
-    fontSize: scale(12.6),
     color: Colors.light.background,
-    marginBottom: scale(3.6)
-  },
-  icon: {
-    marginLeft: scale(-28.75),
-  },
-  inputContainer: {
-    padding: 10,
-    backgroundColor: 'white',
+    width: scale(70),
+    textAlign: 'center',
+    fontWeight: '600'
   },
 });

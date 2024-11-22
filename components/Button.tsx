@@ -7,6 +7,7 @@ import { scale, verticalScale } from "react-native-size-matters";
 import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
 import { Appearance } from "react-native";
 import { Dimensions } from "react-native";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface ButtonProps {
   label: string;
@@ -42,7 +43,7 @@ function getLabelStyle(type: ButtonProps['type'], size: ButtonProps['size']){
   return [
     (size === "regular") ? styles.labelRegularSize : styles.labelSmallerSize,
     (size === "large") ? styles.labelBold : styles.labelSemiBold,
-    styles.label
+    {color: useThemeColor({light: '', dark: ''}, 'background')}
   ]
 }
 
@@ -67,9 +68,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: Dimensions.get('window').width - scale(65),
     paddingVertical: scale(15)
-  },
-  label: {
-    color: (Appearance.getColorScheme() === "dark") ? Colors.dark.text : Colors.light.text,
   },
   labelSemiBold: {
     fontWeight: '600',

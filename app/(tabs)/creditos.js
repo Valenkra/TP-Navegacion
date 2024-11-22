@@ -3,22 +3,36 @@ import { StyleSheet, ScrollView } from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import { MyText } from '@/components/MyText';
 import { ThemedView } from '@/components/ThemedView';
+import { verticalScale } from 'react-native-size-matters';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Dimensions } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 export default function Creditos() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <ThemedView style={styles.headerContainer}>
-        <MyText type="title" style={styles.titleText}>Acerca de nosotros</MyText>
-        <HelloWave />
-      </ThemedView>
+    <SafeAreaView style={[styles.fullContainer, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <ThemedView style={styles.headerContainer}>
+          <MyText type="title" style={styles.titleText}>Acerca de nosotros</MyText>
+          <HelloWave />
+        </ThemedView>
 
-      <ThemedView style={styles.sectionContainer}>
-        <MyText type="subtitle" style={styles.subtitleText}>Quiénes somos</MyText>
-        <MyText style={styles.textContent}>
-          Somos Franco y Valen, y creamos este proyecto con mucho entusiasmo :)
-        </MyText>
-      </ThemedView>
-    </ScrollView>
+        <ThemedView style={styles.sectionContainer}>
+          <MyText type="subtitle" style={styles.subtitleText}>Quiénes somos</MyText>
+          <MyText style={styles.textContent}>
+            Somos Franco y Valen, y creamos este proyecto con mucho entusiasmo :)
+          </MyText>
+        </ThemedView>
+
+        <ThemedView style={styles.sectionContainer}>
+          <MyText type="subtitle" style={styles.subtitleText}>Qué hacemos</MyText>
+          <MyText style={styles.textContent}>
+            Apps y otros proyectos tecnológicos.
+          </MyText>
+        </ThemedView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -27,6 +41,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
     backgroundColor: 'linear-gradient(to right, #A1CEDC, #1D3D47)',
+    marginTop: verticalScale(15)
+  },  
+  fullContainer: {
+    display: 'flex',
+    height: Dimensions.get('window').height,
   },
   headerContainer: {
     alignItems: 'center',

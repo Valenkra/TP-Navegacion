@@ -54,7 +54,7 @@ const ContactInfo = ({ route, navigation }) => {
     }, [confirmarCambio])
 
     return(
-        <SafeAreaView style={styles.container} onTouchStart={()=>Keyboard.dismiss()}>
+        <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]} onTouchStart={()=>Keyboard.dismiss()}>
             {
                 (isEmergency == false && EC_id != undefined && EC_id != null) ? 
                     <Alerta
@@ -75,7 +75,7 @@ const ContactInfo = ({ route, navigation }) => {
 
             <Back navigation={navigation}/>
             <View style={styles.titleContainer}>
-                <MyText type='title'style={styles.contacto}>{contact.name}</MyText>
+                <MyText type='title'style={[styles.contacto, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>{contact.name}</MyText>
             </View>
             <DefineEmergencyContact 
                 isEmergency={isEmergency}
@@ -83,7 +83,7 @@ const ContactInfo = ({ route, navigation }) => {
             />
             <View style={[styles.elementContainer,
             { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') } ]}>
-                <MyText type="default" style={{fontSize: scale(14)}}>celular</MyText>
+                <MyText type="default" style={{fontSize: scale(14), color: useThemeColor({light: '', dark: ''}, 'text') }}>celular</MyText>
                 <MyText style={{ fontSize: scale(16), color: useThemeColor({light: '', dark: ''}, 'primary') }}>{numFormatter.format(contact.phoneNumbers[0].digits)}</MyText>
             </View>
             <TextAreaInput
@@ -98,12 +98,6 @@ const ContactInfo = ({ route, navigation }) => {
 
 
 const styles = StyleSheet.create({
-    headerImage: {
-      color: '#808080',
-      bottom: -90,
-      left: -35,
-      position: 'absolute',
-    },
     titleContainer: {
       display:'flex',
       justifyContent: 'flex-start',
@@ -111,7 +105,6 @@ const styles = StyleSheet.create({
       marginBottom: scale(20)
     },
     container: {
-        backgroundColor: Colors.dark.background,
         height: Dimensions.get('window').height,
         flex: 1,
         alignItems: 'flex-start',
@@ -122,7 +115,6 @@ const styles = StyleSheet.create({
         fontSize: scale(40),
         lineHeight: scale(50),
         width: scale(310),
-        color: Colors.dark.white
     },
     elementContainer:{
         display: 'flex',

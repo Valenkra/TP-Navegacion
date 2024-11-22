@@ -20,12 +20,12 @@ export default function TextAreaInput({ style, label, placeholder, disabled = fa
     const { setEC_msg } = useContactContext();
   return (
     <View style={styles.container} onTouchStart={()=>Keyboard.dismiss()}>
-        <MyText type="default" style={{fontSize: scale(14)}}>{label}</MyText>
+        <MyText type="default" style={{fontSize: scale(14), color: useThemeColor({light: '', dark: ''}, 'text')}}>{label}</MyText>
         <View style={[styles.elementContainer, styles.msgContainer, 
             { backgroundColor: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'darkGray' : 'lightGray')) } ]}>
                 <TextInput onChangeText={(e) => setEC_msg(e)} onSubmitEditing={Keyboard.dismiss} blurOnSubmit={true} multiline={true} numberOfLines={10} style={[{fontSize: scale(14)},
                     { color: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'lightGray' : 'text')) } ]} 
-                    editable={!disabled} placeholder={placeholder} value={value}>
+                    editable={!disabled} placeholder={placeholder} placeholderTextColor={useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'lightGray' : 'text'))} value={value}>
                 </TextInput>
         </View>
     </View>
