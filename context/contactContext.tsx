@@ -36,6 +36,8 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
   useEffect(() => {
     const emergencyContact = contacts.find(contact => contact.emergencyContact === true);
     setEC_id(emergencyContact ? emergencyContact.id : null);
+    setEC_phone(emergencyContact ? emergencyContact?.phoneNumbers[0].digits : null);
+    setEC_msg(null);
   }, [contacts]);
 
   const value = { contacts, setContacts, EC_id, setEC_id, EC_msg, setEC_msg, EC_phone, setEC_phone };

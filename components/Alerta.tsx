@@ -13,13 +13,9 @@ interface AlertProps {
     setBool: React.Dispatch<React.SetStateAction<boolean | null>>;
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean | null>>;
-    setAbriModal: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 
-export default function Alerta({ description, trueButton, falseButton, title, setBool, setModalVisible, modalVisible, setAbriModal }: AlertProps) {
-  useEffect(() => {
-    setAbriModal(true);
-  }, [])
+export default function Alerta({ description, trueButton, falseButton, title, setBool, setModalVisible, modalVisible }: AlertProps) {
   return (
         <Modal
             animationType="fade"
@@ -35,13 +31,13 @@ export default function Alerta({ description, trueButton, falseButton, title, se
                     <View style={styles.buttonContainer}>
                         <Pressable
                             style={styles.button}
-                            onPress={() => {setBool(true); setModalVisible(!modalVisible)}}
+                            onPress={() => {setBool(true); setModalVisible(false)}}
                         >
                         <MyText style={styles.buttonCancel}>{trueButton}</MyText>
                         </Pressable>
                         <Pressable
                             style={styles.button}
-                            onPress={() => {{ setBool(false); setModalVisible(!modalVisible)}}}
+                            onPress={() => {{ setBool(false); setModalVisible(false)}}}
                         >
                         <MyText style={styles.buttonConfirm}>{falseButton}</MyText>
                         </Pressable>

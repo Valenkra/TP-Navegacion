@@ -21,7 +21,7 @@ export default function DefineEmergencyContact({ isEmergency, setPressed }) {
                 : { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') }]} >
                 <MyText type="default"
                         style={[styles.littleText, (isEmergency) ? 
-                                        { color: useThemeColor({light: '', dark: ''}, 'text') } : 
+                                        { color: useThemeColor({light: '#fff', dark: ''}, 'text') } : 
                                         { color: useThemeColor({light: '', dark: ''}, 'text') }]}
                 > {(isEmergency) ? "Quitar como contacto de emergencia" : "Establecer contacto de emergencia" } </MyText>
                 {

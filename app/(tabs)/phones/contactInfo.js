@@ -8,6 +8,7 @@ import Back from "@/components/Back";
 import DefineEmergencyContact from "@/components/DefineEmergencyContact";
 import { useContext, useEffect, useState } from "react";
 import { Keyboard } from "react-native";
+import { useCallback } from "react";
 import numFormatter from "@/helpers/numFormatter";
 import { useContactContext } from "@/context/contactContext";
 import Alerta from "@/components/Alerta";
@@ -18,59 +19,44 @@ const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
     const { EC_id, contacts, setContacts, EC_msg, setEC_msg, setEC_phone } = useContactContext();
     const [pressed, setPressed] = useState(false);
-    const [isEmergency, setIsEmergency] = useState((contact.id == EC_id)? true : false);
+    const [isEmergency, setIsEmergency] = useState((contact.id == EC_id) ? true : false);
     const [confirmarCambio, setConfirmarCambio] = useState(false);
-    const [abriModal, setAbriModal] = useState(false);
-    let temp = 0;
+
+    const handleConfirmarCambio = useCallback(() => {
+        setContacts(contacts.map(myContact =>
+            myContact.id === contact.id
+                ? { ...myContact, emergencyContact: !myContact.emergencyContact }
+                : { ...myContact, emergencyContact: false }
+        ));
+        setIsEmergency(prevIsEmergency => !prevIsEmergency);
+        setConfirmarCambio(false);
+        setPressed(false);
+    }, [contacts, contact.id, setContacts]);
 
     useEffect(() => {
-        if(isEmergency == true && abriModal == true){
-            setPressed(false);
-            setAbriModal(false);
-            setContacts(contacts.map(myContact =>
-                myContact.id === contact.id
-                    ? { ...myContact, emergencyContact: !myContact.emergencyContact }
-                    : { ...myContact, emergencyContact: false }
-                )
-            )
-            setIsEmergency(!isEmergency)
+        if (confirmarCambio) {
+            handleConfirmarCambio();
         }
-    }, [pressed])
+    }, [confirmarCambio, handleConfirmarCambio]);
 
-    useEffect(() => {
-        if(confirmarCambio == true){
-            if(abriModal)setPressed(false);
-            setEC_phone(contact.phoneNumbers[0].digits)
-            setContacts(contacts.map(myContact =>
-                myContact.id === contact.id
-                    ? { ...myContact, emergencyContact: true }
-                    : { ...myContact, emergencyContact: false }
-                )
-            )
-            setEC_msg(null);
-            setConfirmarCambio(false);
-            setIsEmergency(!isEmergency);
-        }
-    }, [confirmarCambio])
-
+    
     return(
         <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]} onTouchStart={()=>Keyboard.dismiss()}>
+
             {
-                (isEmergency == false && EC_id != undefined && EC_id != null) ? 
+                (pressed == true) &&
                     <Alerta
                     title="Actualizar contacto de emergencia"
-                    description="Ya tienes un contacto de emergencia establecido. ¿Deseas cambiarlo?"
+                    description={(EC_id != null && isEmergency == true) ? 
+                                    "Estas por quitar a tu contacto de emergencia. Vas a perder el mensaje preestablecido."
+                                : (EC_id != null && isEmergency == false) ? "Ya tienes un contacto de emergencia establecido. ¿Deseas cambiarlo?" :
+                                    "Estas por definir a "}
                     trueButton="Actualizar"
                     falseButton="Cancelar"
                     setModalVisible={setPressed}
                     modalVisible={pressed}
                     setBool={setConfirmarCambio}
-                    setAbriModal={setAbriModal}
-                /> : ""
-            }
-
-            {
-                (pressed == true && EC_id == null) ? setConfirmarCambio(true) : ""
+                /> 
             }
 
             <Back navigation={navigation}/>
