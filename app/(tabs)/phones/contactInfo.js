@@ -14,6 +14,7 @@ import { useContactContext } from "@/context/contactContext";
 import Alerta from "@/components/Alerta";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import TextAreaInput from "@/components/TextAreaInput";
+import CellInfoSlot from "@/components/CellInfoSlot";
 
 const ContactInfo = ({ route, navigation }) => {
     const { contact } = route.params;
@@ -50,7 +51,7 @@ const ContactInfo = ({ route, navigation }) => {
                     description={(EC_id != null && isEmergency == true) ? 
                                     "Estas por quitar a tu contacto de emergencia. Vas a perder el mensaje preestablecido."
                                 : (EC_id != null && isEmergency == false) ? "Ya tienes un contacto de emergencia establecido. ¿Deseas cambiarlo?" :
-                                    "Estas por definir a "}
+                                    `Estas por definir a ${contact.name} como tu contacto de emergencia.`}
                     trueButton="Actualizar"
                     falseButton="Cancelar"
                     setModalVisible={setPressed}
@@ -67,11 +68,11 @@ const ContactInfo = ({ route, navigation }) => {
                 isEmergency={isEmergency}
                 setPressed={setPressed}
             />
-            <View style={[styles.elementContainer,
-            { backgroundColor: useThemeColor({light: '', dark: ''}, 'lightGray') } ]}>
-                <MyText type="default" style={{fontSize: scale(14), color: useThemeColor({light: '', dark: ''}, 'text') }}>celular</MyText>
-                <MyText style={{ fontSize: scale(16), color: useThemeColor({light: '', dark: ''}, 'primary') }}>{numFormatter.format(contact.phoneNumbers[0].digits)}</MyText>
-            </View>
+            <CellInfoSlot
+                label="celular"
+                value={numFormatter.format(contact.phoneNumbers[0].digits)}
+                valueStyle={{color: useThemeColor({light: '', dark: ''}, 'primary')}}
+            />
             <TextAreaInput
                 placeholder="Hola! Si te llegó este mensaje es porque estoy en una emergencia..."
                 disabled={!isEmergency}
@@ -85,10 +86,10 @@ const ContactInfo = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     titleContainer: {
-      display:'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-      marginBottom: scale(20)
+        display:'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        marginBottom: scale(20)
     },
     container: {
         height: Dimensions.get('window').height,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         paddingHorizontal: scale(20),
         paddingTop: scale(20),
-      },
+    },
     contacto:{
         fontSize: scale(40),
         lineHeight: scale(50),
@@ -114,6 +115,5 @@ const styles = StyleSheet.create({
         marginTop: scale(10),
     },
 });
-      
 
 export default ContactInfo;

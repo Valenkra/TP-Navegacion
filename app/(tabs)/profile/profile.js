@@ -1,19 +1,20 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Keyboard } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Keyboard, Pressable } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { MyText } from '@/components/MyText';
 import { Text } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { NativeViewGestureHandler, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Back from '@/components/Back';
 import * as React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { scale, verticalScale } from 'react-native-size-matters';
 
-const MyProfile = ({navigation}) => {
+const MyProfile = () => {
+  const navigation = useNavigation()
   const [isEditing, setIsEditing] = React.useState(true);
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
@@ -90,20 +91,23 @@ const MyProfile = ({navigation}) => {
             optionalStyle={styles.input}
           />
         </ScrollView>
-        <View style={styles.btnContainer}>
-          <Button
-            label={isEditing ? "Guardar" : "Editar"}
-            size="medium"
-            type="primary"
-            onPress={toggleEdit}
-          />
-          <Button
-            label="Ver contacto de emergencia"
-            size="medium"
-            type="secondary"
-            onPress={() => navigation.navigate('Config')}
-          />
-        </View>
+        <NativeViewGestureHandler>
+          
+          <View style={styles.btnContainer}>
+            <Button
+              label={isEditing ? "Guardar" : "Editar"}
+              size="medium"
+              type="primary"
+              onPress={toggleEdit}
+            />
+            <Button
+              label="Ver contacto de emergencia"
+              size="medium"
+              type="secondary"
+              onPress={() => navigation.navigate("ProfileConfig")}
+            />
+          </View>
+        </NativeViewGestureHandler>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );

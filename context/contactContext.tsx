@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Accelerometer } from "expo-sensors";
+import numFormatter from "@/helpers/numFormatter";
 import * as SMS from 'expo-sms';
 
 type Contact = {
@@ -19,6 +20,8 @@ type ContactContextType = {
   setEC_msg: React.Dispatch<React.SetStateAction<string | null>>; 
   EC_phone: string | null;
   setEC_phone: React.Dispatch<React.SetStateAction<string | null>>; 
+  EC_name: string | null;
+  setEC_name: React.Dispatch<React.SetStateAction<string | null>>; 
 };
 
 export const ContactContext = createContext<ContactContextType | undefined>(undefined);
@@ -32,15 +35,17 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
   const [EC_id, setEC_id] = useState<string | null>(null);
   const [EC_msg, setEC_msg] = useState<string | null>(null);
   const [EC_phone, setEC_phone] = useState<string | null>(null);
+  const [EC_name, setEC_name] = useState<string | null>(null);
 
   useEffect(() => {
     const emergencyContact = contacts.find(contact => contact.emergencyContact === true);
     setEC_id(emergencyContact ? emergencyContact.id : null);
-    setEC_phone(emergencyContact ? emergencyContact?.phoneNumbers[0].digits : null);
-    setEC_msg(null);
+    setEC_phone(emergencyContact ? numFormatter.format(emergencyContact?.phoneNumbers[0].digits) : null);
+    setEC_name(emergencyContact ? emergencyContact.name : null);
+    setEC_msg(emergencyContact ? "Hola! Si te llegó este mensaje es porque estoy en una emergencia." : null);
   }, [contacts]);
 
-  const value = { contacts, setContacts, EC_id, setEC_id, EC_msg, setEC_msg, EC_phone, setEC_phone };
+  const value = { contacts, setContacts, EC_id, setEC_id, EC_msg, setEC_msg, EC_phone, setEC_phone, EC_name, setEC_name };
 
   useEffect(() => {
     const subscription = Accelerometer.addListener(async ({ x, y, z }) => {

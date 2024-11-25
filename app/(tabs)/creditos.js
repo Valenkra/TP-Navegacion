@@ -13,19 +13,19 @@ export default function Creditos() {
   return (
     <SafeAreaView style={[styles.fullContainer, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
       <ScrollView contentContainerStyle={styles.container}>
-        <ThemedView style={styles.headerContainer}>
+        <ThemedView style={[styles.headerContainer, {backgroundColor: useThemeColor({light: '', dark: ''},'darkGray')}]}>
           <MyText type="title" style={styles.titleText}>Acerca de nosotros</MyText>
           <HelloWave />
         </ThemedView>
 
-        <ThemedView style={styles.sectionContainer}>
+        <ThemedView style={[styles.sectionContainer, {backgroundColor: useThemeColor({light: '', dark: ''},'darkGray')}]}>
           <MyText type="subtitle" style={styles.subtitleText}>Quiénes somos</MyText>
           <MyText style={styles.textContent}>
             Somos Franco y Valen, y creamos este proyecto con mucho entusiasmo :)
           </MyText>
         </ThemedView>
 
-        <ThemedView style={styles.sectionContainer}>
+        <ThemedView style={[styles.sectionContainer, {backgroundColor: useThemeColor({light: '', dark: ''},'darkGray')}]}>
           <MyText type="subtitle" style={styles.subtitleText}>Qué hacemos</MyText>
           <MyText style={styles.textContent}>
             Apps y otros proyectos tecnológicos.
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
     marginBottom: 32,
-    backgroundColor: '#FFF',
     padding: 20,
     borderRadius: 16,
     shadowColor: '#000',
@@ -62,10 +61,8 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#1D3D47',
   },
   sectionContainer: {
-    backgroundColor: '#FFF',
     borderRadius: 16,
     padding: 20,
     marginBottom: 20,
@@ -77,13 +74,11 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     fontSize: 20,
-    color: '#1D3D47',
     fontWeight: '600',
     marginBottom: 8,
   },
   textContent: {
     fontSize: 16,
-    color: '#555',
     lineHeight: 24,
   },
 });

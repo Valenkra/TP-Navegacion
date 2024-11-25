@@ -18,16 +18,48 @@ import * as React from 'react';
 import { Button } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useNavigation } from '@react-navigation/native';
+import CellInfoSlot from '@/components/CellInfoSlot';
+import { useContactContext } from '@/context/contactContext';
+import TextAreaInput from '@/components/TextAreaInput';
+import { useColorScheme } from 'react-native';
 
 export default function MyProfileConfig() {
   const navigation = useNavigation();
-
+  const colorScheme = useColorScheme();
+  const { EC_name, EC_id, EC_phone, EC_msg } = useContactContext();
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
       <Back navigation={navigation}/>
       <View style={styles.titleContainer}>
           <MyText type='title'style={[styles.contacto, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>Contacto de Emergencia</MyText>
       </View>
+      {
+        (EC_id != null) ? 
+        <View>
+          <CellInfoSlot
+            label="nombre"
+            value={EC_name}
+            />
+          <CellInfoSlot
+            label="celular"
+            value={EC_phone}
+            valueStyle={{color: useThemeColor({light: '', dark: ''}, 'primary')}}
+            />
+          <TextAreaInput
+            placeholder="Hola! Si te llegó este mensaje es porque estoy en una emergencia..."
+            disabled={false}
+            value={EC_msg}
+            label="Mensaje de emergencia"
+            />
+        </View> :
+        <View style={styles.noHayContainer}>
+          <MyText type="defaultSemiBold"
+          style={{textAlign: 'center', color: useThemeColor({light: '', dark: ''}, (colorScheme === 'light') ? 'darkGray' : 'lightGray')}}>
+            Vaya! Todavía no has definido ningun contacto de emergencia.
+          </MyText>
+        </View>
+      }
+      
   </SafeAreaView>
   );
 }
@@ -51,4 +83,10 @@ const styles = StyleSheet.create({
     lineHeight: scale(50),
     width: scale(310),
 },
+  noHayContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+    paddingLeft: scale(20),
+  }
 });
