@@ -24,7 +24,7 @@ export default function TextAreaInput({ style, label, placeholder, disabled = fa
         <View style={[styles.elementContainer, styles.msgContainer, 
             { backgroundColor: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'darkGray' : 'lightGray')) } ]}>
                 <TextInput onChangeText={(e) => setEC_msg(e)} onSubmitEditing={Keyboard.dismiss} blurOnSubmit={true} multiline={true} numberOfLines={10} style={[{fontSize: scale(14)},
-                    { color: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'lightGray' : 'text')) } ]} 
+                    { color: useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'lightGray' : 'text'))} ]} 
                     editable={!disabled} placeholder={placeholder} placeholderTextColor={useThemeColor({light: '', dark: ''}, ((disabled == true) ? 'lightGray' : 'darkGray'))} value={value}>
                 </TextInput>
         </View>

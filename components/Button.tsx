@@ -4,6 +4,7 @@ import { Pressable } from "react-native";
 import { ViewStyle } from "react-native-size-matters";
 import { Colors } from "@/constants/Colors";
 import { scale, verticalScale } from "react-native-size-matters";
+import { StyleProp } from "react-native";
 import { generateBoxShadowStyle } from "@/utilities/generateBoxShadow";
 import { Appearance } from "react-native";
 import { Dimensions } from "react-native";
@@ -15,16 +16,16 @@ interface ButtonProps {
   type: "primary" | "secondary";
   onPress?: () => true | Promise<void> | void;
   disabled?: boolean;
-  style?: ViewStyle;
-  labelStyle?: TextStyle;
+  style?: StyleProp<TextStyle> | undefined;
+  labelStyle?: StyleProp<TextStyle> | undefined;
 }
 
 export default function Button({ label, size, type, onPress, disabled = false, style, labelStyle}: ButtonProps) {
 
   return (
     <View style={{flexDirection: 'column', alignItems: 'flex-start'}}>
-        <Pressable onPress={onPress} style={getButtonStyle(size, type)}>
-            <Text style={getLabelStyle(type, size)}>{label}</Text>
+        <Pressable onPress={onPress} style={[getButtonStyle(size, type), style]}>
+            <Text style={[getLabelStyle(type, size), labelStyle]}>{label}</Text>
         </Pressable>
     </View>
   );

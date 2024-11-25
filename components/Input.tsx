@@ -20,11 +20,6 @@ interface InputProps extends TextInputProps {
 
 export default function Input({ style, label, size, placeholder, onChangeText, type, value, optionalStyle, disabled = false, ...rest }: InputProps) {
   const [isActive, setIsActive] = useState(false);
-  const [showPassword, setShowPassword] = useState(type ? false : true);
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   const handleFocus = () => {
     setIsActive(true);
@@ -39,7 +34,6 @@ export default function Input({ style, label, size, placeholder, onChangeText, t
       <Text style={[styles.label, {color: useThemeColor({light: '', dark: ''}, 'text')}]}>{label}</Text>
       <TouchableWithoutFeedback style={[{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }, optionalStyle]}>
         <TextInput
-          secureTextEntry={!showPassword}
           style={[getInputStyles(size, isActive), style]}
           placeholder={placeholder}
           placeholderTextColor="grey"
@@ -60,7 +54,7 @@ function getInputStyles(size: InputProps['size'], isActive: boolean) {
     styles.input,
     size === "normal" ? styles.normal : styles.large,
     { color: useThemeColor({light: '', dark: ''}, 'text'),
-      borderTopColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'background'),
+      borderTopColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'lightGray'),
       borderLeftColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'lightGray'),
       borderRightColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'background' : 'lightGray'),
       borderBottomColor: useThemeColor({light: '', dark: ''}, (!isActive) ? 'darkGray' : 'lightGray')  }

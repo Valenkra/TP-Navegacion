@@ -12,6 +12,7 @@ import * as React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { scale, verticalScale } from 'react-native-size-matters';
+import numFormatter from '@/helpers/numFormatter';
 
 const MyProfile = () => {
   const navigation = useNavigation()
@@ -45,6 +46,7 @@ const MyProfile = () => {
             style={[styles.perfil, {color: useThemeColor({light: '', dark: ''}, 'text')}]}
           >Mi Perfil</MyText>
         </View>
+        <NativeViewGestureHandler onPress={Keyboard.dismiss}>
         <View style={[styles.topContainer, styles.div]}>
           <View style={styles.profileContainer}>
             <TouchableOpacity onPress={pickImage}>
@@ -52,7 +54,7 @@ const MyProfile = () => {
                 source={{
                   uri: profileImage
                     ? profileImage
-                    : 'https://media.istockphoto.com/id/1495088043/es/vector/icono-de-perfil-de-usuario-avatar-o-icono-de-persona-foto-de-perfil-s%C3%ADmbolo-de-retrato.jpg?s=612x612&w=0&k=20&c=mY3gnj2lU7khgLhV6dQBNqomEGj3ayWH-xtpYuCXrzk=',
+                    : 'https://i.imgur.com/BBcoGRe.png',
                 }}
                 resizeMode='cover'
                 style={styles.profileImage}
@@ -61,6 +63,7 @@ const MyProfile = () => {
           </View>
           <Text onPress={pickImage} style={[styles.editar, {color: useThemeColor({light: '', dark: ''}, 'secondary')}]}>Editar foto</Text>
         </View>
+        </NativeViewGestureHandler>
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.infoContainer, styles.div]}>
           <Input
             label="Nombre"
@@ -77,34 +80,19 @@ const MyProfile = () => {
             placeholder="Teléfono"
             value={phone}
             type='phone-pad'
-            onChangeText={setPhone}
-            editable={isEditing}
-            optionalStyle={styles.input}
-          />
-          <Input
-            label="Fecha de nacimiento"
-            size="normal"
-            placeholder="Fecha de nacimiento"
-            value={birthdate}
-            onChangeText={setBirthdate}
+            onChangeText={(e) => setPhone(numFormatter.realTimeFormatter(e))}
             editable={isEditing}
             optionalStyle={styles.input}
           />
         </ScrollView>
         <NativeViewGestureHandler>
-          
           <View style={styles.btnContainer}>
-            <Button
-              label={isEditing ? "Guardar" : "Editar"}
-              size="medium"
-              type="primary"
-              onPress={toggleEdit}
-            />
             <Button
               label="Ver contacto de emergencia"
               size="medium"
               type="secondary"
               onPress={() => navigation.navigate("ProfileConfig")}
+
             />
           </View>
         </NativeViewGestureHandler>
@@ -154,7 +142,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    marginTop: scale(-15),
     paddingBottom: scale(25)
   },
   btnContainer: {

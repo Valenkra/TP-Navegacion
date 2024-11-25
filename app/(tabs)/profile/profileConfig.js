@@ -54,7 +54,7 @@ export default function MyProfileConfig() {
         </View> :
         <View style={styles.noHayContainer}>
           <MyText type="defaultSemiBold"
-          style={{textAlign: 'center', color: useThemeColor({light: '', dark: ''}, (colorScheme === 'light') ? 'darkGray' : 'lightGray')}}>
+          style={{textAlign: 'center', color: useThemeColor({light: '', dark: ''}, (colorScheme === 'light') ? 'darkGray' : 'text')}}>
             Vaya! Todavía no has definido ningun contacto de emergencia.
           </MyText>
         </View>
