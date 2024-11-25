@@ -7,25 +7,27 @@ import { verticalScale } from 'react-native-size-matters';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dimensions } from 'react-native';
+import { useColorScheme } from 'react-native';
 import { scale } from 'react-native-size-matters';
 
 export default function Creditos() {
+  const colorScheme = useColorScheme();
   return (
     <SafeAreaView style={[styles.fullContainer, { backgroundColor: useThemeColor({light: '', dark: ''}, 'background') }]}>
       <ScrollView contentContainerStyle={styles.container}>
-        <ThemedView style={[styles.headerContainer, {backgroundColor: useThemeColor({light: '', dark: ''},'darkGray')}]}>
+        <ThemedView style={[styles.headerContainer, {backgroundColor: useThemeColor({light: '', dark: ''},(colorScheme == 'dark') ? 'darkGray' : 'background')}]}>
           <MyText type="title" style={styles.titleText}>Acerca de nosotros</MyText>
           <HelloWave />
         </ThemedView>
 
-        <ThemedView style={[styles.sectionContainer, {backgroundColor: useThemeColor({light: '', dark: ''},'darkGray')}]}>
+        <ThemedView style={[styles.sectionContainer, {backgroundColor: useThemeColor({light: '', dark: ''},(colorScheme == 'dark') ? 'darkGray' : 'background')}]}>
           <MyText type="subtitle" style={styles.subtitleText}>Quiénes somos</MyText>
           <MyText style={styles.textContent}>
             Somos Franco y Valen, y creamos este proyecto con mucho entusiasmo :)
           </MyText>
         </ThemedView>
 
-        <ThemedView style={[styles.sectionContainer, {backgroundColor: useThemeColor({light: '', dark: ''},'darkGray')}]}>
+        <ThemedView style={[styles.sectionContainer, {backgroundColor: useThemeColor({light: '', dark: ''},(colorScheme == 'dark') ? 'darkGray' : 'background')}]}>
           <MyText type="subtitle" style={styles.subtitleText}>Qué hacemos</MyText>
           <MyText style={styles.textContent}>
             Apps y otros proyectos tecnológicos.
